@@ -28,7 +28,7 @@ export const telegramAuth = (data: TelegramAuthData, token: string) => {
 
   const isLoggedIn = data.hash === hash
   if (!isLoggedIn) {
-    throw new Error('Authorization data is valid!')
+    throw new Error('Authorization data is not valid!')
   }
 
   const {
