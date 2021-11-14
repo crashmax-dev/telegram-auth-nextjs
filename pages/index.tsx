@@ -1,17 +1,17 @@
 import Head from 'next/head'
 import { useState } from 'react'
-import TelegramLoginButton, { TelegramUser } from 'telegram-login-button'
+import TelegramLoginButton, { UserData } from 'telegram-login-button'
 
 interface ApiResponse {
   ok: boolean
-  body: TelegramUser
+  body: UserData
   error?: string
 }
 
 export default function Home() {
   const [response, setResponse] = useState<ApiResponse | null>(null)
 
-  const handleTelegramResponse = async (data: TelegramUser) => {
+  const handleTelegramResponse = async (data: UserData) => {
     try {
       const response = await fetch('/api/auth', {
         method: 'POST',
@@ -34,6 +34,7 @@ export default function Home() {
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 gap-4">
         <TelegramLoginButton
           usePic={true}
+          requestAccess={false}
           dataOnauth={handleTelegramResponse}
           botName="nextjs_bot"
         />

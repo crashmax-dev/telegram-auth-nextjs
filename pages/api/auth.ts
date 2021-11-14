@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { TelegramUser } from 'telegram-login-button'
+import { UserData } from 'telegram-login-button'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -21,7 +21,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-function checkTelegramAuth(user: TelegramUser, token: string, lifespan = 60) {
+function checkTelegramAuth(user: UserData, token: string, lifespan = 60) {
   const values = []
 
   for (const [key, value] of Object.entries(user)) {
