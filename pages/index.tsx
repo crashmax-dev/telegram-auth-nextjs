@@ -1,29 +1,9 @@
 import Head from 'next/head'
-import { useState } from 'react'
-import TelegramLoginButton, { UserData } from 'telegram-login-button'
-
-interface ApiResponse {
-  ok: boolean
-  body: UserData
-  error?: string
-}
+import useUser from 'lib/use-user'
+import TelegramLoginButton from 'telegram-login-button'
 
 export default function Home() {
-  const [response, setResponse] = useState<ApiResponse | null>(null)
-
-  const handleTelegramResponse = async (data: UserData) => {
-    try {
-      const response = await fetch('/api/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      const body = await response.json()
-      setResponse(body)
-    } catch (err) {
-      console.error(err)
-    }
-  }
+  const { user, onLogin, onLogout } = useUser()
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -32,17 +12,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 gap-4">
-        <TelegramLoginButton
-          usePic={true}
-          requestAccess={false}
-          dataOnauth={handleTelegramResponse}
-          botName="nextjs_bot"
-        />
-        {response &&
-          <pre className="w-full border rounded-md p-4">
-            {JSON.stringify(response, null, 2)}
-          </pre>
-        }
+        {!user?.isLoggedIn ? (
+          <TelegramLoginButton
+            usePic={true}
+            requestAccess={false}
+            dataOnauth={onLogin}
+            botName="nextjs_bot"
+          />
+        ) : (
+          <>
+            <button onClick={onLogout} className="bg-telegram text-white py-2 px-4 rounded-full">
+              Logout
+            </button>
+            <pre className="overflow-auto w-full border rounded-md p-4">
+              {JSON.stringify(user, null, 2)}
+            </pre>
+          </>
+        )}
       </main>
     </div>
   )

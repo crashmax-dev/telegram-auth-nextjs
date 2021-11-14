@@ -1,7 +1,7 @@
 import { TelegramUser } from 'telegram-login-button'
 
 declare module 'telegram-login-button' {
-  export interface UserData extends Omit<TelegramUser, 'username' | 'photo_url'> {
+  export interface TelegramAuthData extends Omit<TelegramUser, 'username' | 'photo_url'> {
     id: number
     first_name: string
     last_name?: string
