@@ -20,11 +20,11 @@ export default function useUser({
           body: JSON.stringify(body)
         })
       )
-    } catch (error) {
-      if (error instanceof FetchError) {
-        console.error(error.data.message)
+    } catch (err) {
+      if (err instanceof FetchError) {
+        console.error(err.data.message)
       } else {
-        console.error('An unexpected error happened:', error)
+        console.error('An unexpected error happened:', err)
       }
     }
   }
@@ -34,6 +34,7 @@ export default function useUser({
       await fetcher('/api/logout', { method: 'POST' }),
       false
     )
+    Router.push(redirectTo)
   }
 
   useEffect(() => {

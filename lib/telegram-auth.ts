@@ -31,9 +31,24 @@ export const telegramAuth = (data: TelegramAuthData, token: string) => {
     throw new Error('Authorization data is valid!')
   }
 
-  // @ts-ignore
-  delete data.hash
-  return data
+  const {
+    id,
+    username,
+    first_name,
+    last_name,
+    photo_url,
+    auth_date
+  } = data
+
+  return {
+    isLoggedIn,
+    id,
+    username,
+    first_name,
+    last_name,
+    photo_url,
+    auth_date
+  }
 }
 
 export const validateUserData = (data: TelegramAuthData) => {

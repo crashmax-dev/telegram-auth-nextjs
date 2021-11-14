@@ -3,7 +3,7 @@ import { SWRConfig } from 'swr'
 import fetcher from 'lib/fetcher'
 import 'tailwindcss/tailwind.css'
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig
       value={{
@@ -17,5 +17,3 @@ function MyApp({ Component, pageProps }: AppProps) {
     </SWRConfig>
   )
 }
-
-export default MyApp

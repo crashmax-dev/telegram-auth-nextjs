@@ -3,7 +3,7 @@ import { telegramAuth } from 'lib/telegram-auth'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-export default withIronSessionApiRoute(loginRoute, sessionOptions);
+export default withIronSessionApiRoute(loginRoute, sessionOptions)
 
 async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -12,8 +12,8 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const body = await req.body
-    const user = telegramAuth(body, process.env.BOT_TOKEN as string)
-    req.session.user = { isLoggedIn: true, ...user }
+    const user = telegramAuth(body, process.env.BOT_TOKEN)
+    req.session.user = user
     await req.session.save()
     res.json(user)
   } catch (err) {
