@@ -1,18 +1,28 @@
 import Head from 'next/head'
 import { useState } from 'react'
-import TelegramLoginButton from 'react-telegram-login'
+import TelegramLoginButton, { TelegramUser } from 'telegram-login-button'
+
+interface ApiResponse {
+  ok: boolean
+  body: TelegramUser
+  error?: string
+}
 
 export default function Home() {
-  const [response, setResponse] = useState(null)
+  const [response, setResponse] = useState<ApiResponse | null>(null)
 
-  const handleTelegramResponse = async (data) => {
-    const response = await fetch('/api/auth', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-    const body = await response.json()
-    setResponse(body)
+  const handleTelegramResponse = async (data: TelegramUser) => {
+    try {
+      const response = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      const body = await response.json()
+      setResponse(body)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (
@@ -27,7 +37,7 @@ export default function Home() {
           botName="nextjs_bot"
         />
         {response &&
-          <pre class="w-full border rounded-md p-4">
+          <pre className="w-full border rounded-md p-4">
             {JSON.stringify(response, null, 2)}
           </pre>
         }

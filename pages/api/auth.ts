@@ -1,10 +1,12 @@
 import crypto from 'crypto'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { TelegramUser } from 'telegram-login-button'
 
-export default function handler(req, res) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method === 'POST') {
       res.status(200).json({
-        ok: checkTelegramAuth(req.body, process.env.BOT_TOKEN),
+        ok: checkTelegramAuth(req.body, process.env.BOT_TOKEN as string),
         body: req.body
       })
     } else {
@@ -13,13 +15,13 @@ export default function handler(req, res) {
   } catch (err) {
     res.status(403).json({
       ok: false,
-      error: err.message,
+      error: (err as Error).message,
       body: req.body
     })
   }
 }
 
-function checkTelegramAuth(user, token, lifespan = 60) {
+function checkTelegramAuth(user: TelegramUser, token: string, lifespan = 60) {
   const values = []
 
   for (const [key, value] of Object.entries(user)) {
