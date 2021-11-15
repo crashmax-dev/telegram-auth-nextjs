@@ -17,13 +17,13 @@ export const telegramAuth = (data: TelegramAuthData, token: string) => {
     .update(token)
     .digest()
 
-  const sort = values
+  const sorted = values
     .sort()
     .join('\n')
 
   const hash = crypto
     .createHmac('sha256', secret)
-    .update(sort)
+    .update(sorted)
     .digest('hex')
 
   const isLoggedIn = data.hash === hash

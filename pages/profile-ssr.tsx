@@ -2,14 +2,13 @@ import Link from 'components/Link'
 import Layout from 'components/Layout'
 import Profile from 'components/Profile'
 import useUser from 'lib/use-user'
-import { withIronSessionSsr } from 'iron-session/next'
-import { sessionOptions } from 'lib/session'
+import { withSessionSsr } from 'lib/session'
 import type { User } from 'pages/api/user'
 import type { InferGetServerSidePropsType } from 'next'
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 
-export default function SSRProfile({ user }: Props) {
+export default function ProfileSsr({ user }: Props) {
   const { onLogout } = useUser()
 
   return (
@@ -29,22 +28,24 @@ export default function SSRProfile({ user }: Props) {
   )
 }
 
-export const getServerSideProps = withIronSessionSsr(async ({ req, res, }) => {
-  const user = req.session.user
+export const getServerSideProps = withSessionSsr(
+  async function useSSR({ req }) {
+    const user = req.session.user
 
-  if (!user) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/'
-      },
-      props: {
-        user: { isLoggedIn: false } as User
+    if (!user) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/'
+        },
+        props: {
+          user: { isLoggedIn: false } as User
+        }
       }
     }
-  }
 
-  return {
-    props: { user }
+    return {
+      props: { user }
+    }
   }
-}, sessionOptions)
+)

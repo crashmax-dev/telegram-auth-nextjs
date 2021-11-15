@@ -1,11 +1,10 @@
-import { withIronSessionApiRoute } from 'iron-session/next'
-import { sessionOptions } from 'lib/session'
+import { withSessionRoute } from 'lib/session'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import type { User } from 'pages/api/user'
 
-export default withIronSessionApiRoute(logoutRoute, sessionOptions)
+export default withSessionRoute(logoutRoute)
 
-function logoutRoute(req: NextApiRequest, res: NextApiResponse<User | {}>) {
+function logoutRoute(req: NextApiRequest, res: NextApiResponse<Partial<User>>) {
   req.session.destroy()
   res.json({ isLoggedIn: false })
 }

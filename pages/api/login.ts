@@ -1,9 +1,8 @@
-import { sessionOptions } from 'lib/session'
+import { withSessionRoute } from 'lib/session'
 import { telegramAuth } from 'lib/telegram-auth'
-import { withIronSessionApiRoute } from 'iron-session/next'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-export default withIronSessionApiRoute(loginRoute, sessionOptions)
+export default withSessionRoute(loginRoute)
 
 async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   try {

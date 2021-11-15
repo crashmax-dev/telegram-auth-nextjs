@@ -3,7 +3,7 @@ import Layout from 'components/Layout'
 import Profile from 'components/Profile'
 import useUser from 'lib/use-user'
 
-export default function UserSG() {
+export default function ProfileSg() {
   const { user, onLogout } = useUser({
     redirectTo: '/'
   })
