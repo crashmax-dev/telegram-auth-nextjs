@@ -10,12 +10,10 @@ async function TelegramAuthHandler(req: NextApiRequest, res: NextApiResponse, op
   } = req.query
 
   if (req.method === 'GET') {
-    switch (action) {
-      case 'session':
-        return sessionRoute(req, res)
-      default:
-    }
-  } else if (req.method === 'POST') {
+    return sessionRoute(req, res)
+  }
+
+  if (req.method === 'POST') {
     switch (action) {
       case 'login':
         return loginRoute(req, res)
