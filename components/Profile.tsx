@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Router from 'next/router'
-import { User } from 'pages/api/user'
+import { User } from 'lib/routes/session'
 
 type Props = {
   user?: User

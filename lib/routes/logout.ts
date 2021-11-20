@@ -1,6 +1,6 @@
 import { withSessionRoute } from 'lib/session'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { User } from 'pages/api/user'
+import type { User } from 'lib/routes/session'
 
 export default withSessionRoute(logoutRoute)
 

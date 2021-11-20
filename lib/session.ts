@@ -13,9 +13,7 @@ export function withSessionRoute(handler: NextApiHandler) {
 }
 
 // Theses types are compatible with InferGetStaticPropsType https://nextjs.org/docs/basic-features/data-fetching#typescript-use-getstaticprops
-export function withSessionSsr<
-  P extends Record<string, unknown> = Record<string, unknown>
->(
+export function withSessionSsr<P extends Record<string, unknown>>(
   handler: (
     context: GetServerSidePropsContext
   ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>

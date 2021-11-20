@@ -3,7 +3,7 @@ import Layout from 'components/Layout'
 import Profile from 'components/Profile'
 import useUser from 'lib/use-user'
 import { withSessionSsr } from 'lib/session'
-import type { User } from 'pages/api/user'
+import type { User } from 'lib/routes/session'
 import type { InferGetServerSidePropsType } from 'next'
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>

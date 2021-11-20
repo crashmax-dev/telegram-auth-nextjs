@@ -2,19 +2,19 @@ import useSWR from 'swr'
 import { useEffect } from 'react'
 import Router from 'next/router'
 import fetcher, { FetchError } from './fetcher'
-import type { User } from 'pages/api/user'
+import type { User } from 'lib/routes/session'
 import type { TelegramAuthData } from 'telegram-login-button'
 
 export default function useUser({
   redirectTo = '',
   redirectIfFound = false
 } = {}) {
-  const { data: user, mutate: mutateUser } = useSWR<User>('/api/user')
+  const { data: user, mutate: mutateUser } = useSWR<User>('/api/auth/session')
 
   const onLogin = async (body: TelegramAuthData) => {
     try {
       mutateUser(
-        await fetcher('/api/login', {
+        await fetcher('/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
@@ -31,7 +31,7 @@ export default function useUser({
 
   const onLogout = async () => {
     mutateUser(
-      await fetcher('/api/logout', { method: 'POST' }),
+      await fetcher('/api/auth/logout', { method: 'POST' }),
       false
     )
     Router.push(redirectTo)

@@ -1,4 +1,4 @@
-import type { User } from 'pages/api/user'
+import type { User } from 'lib/routes/session'
 
 // This is where we specify the typings of req.session.*
 declare module 'iron-session' {
