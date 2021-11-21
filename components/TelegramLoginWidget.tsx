@@ -11,6 +11,7 @@ export interface TelegramUser {
 }
 
 interface Props {
+  botId: number
   botName: string
   usePic?: boolean
   className?: string
@@ -22,6 +23,14 @@ interface Props {
 
 declare global {
   interface Window {
+    Telegram: {
+      Login: {
+        auth: (
+          { bot_id }: { bot_id: number },
+          callback: (user: TelegramUser) => void
+        ) => void
+      }
+    }
     TelegramLoginWidget: {
       dataOnauth: (user: TelegramUser) => void
     }
@@ -37,9 +46,9 @@ const TelegramLoginWidget = (props: Props) => {
   const ref = useRef<HTMLDivElement>(null)
 
   const {
+    botId,
     usePic = false,
     botName,
-    className,
     buttonSize = 'large',
     dataOnauth,
     cornerRadius,
@@ -47,19 +56,20 @@ const TelegramLoginWidget = (props: Props) => {
   } = props
 
   const onAuth = () => {
-    const element = ref.current?.querySelector('iframe')
-
-    // @ts-ignore
-    console.log(window.TWidgetLogin)
-    console.log(element)
-
-    element?.dispatchEvent(
-      new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        buttons: 1
-      })
+    window.Telegram.Login.auth(
+      { bot_id: botId },
+      dataOnauth
     )
+
+    // const element = ref.current?.querySelector('iframe')
+
+    // element?.dispatchEvent(
+    //   new MouseEvent('click', {
+    //     bubbles: true,
+    //     cancelable: true,
+    //     buttons: 1
+    //   })
+    // )
   }
 
   useEffect(() => {
@@ -107,6 +117,9 @@ const TelegramLoginWidget = (props: Props) => {
         Войти через Telegram
       </button>
       <style>{`
+        iframe {
+          display: none;
+        }
         .telegram-ico {
           display: inline-block;
           vertical-align: top;
