@@ -22,9 +22,6 @@ interface Props {
 
 declare global {
   interface Window {
-    TWidgetLogin: {
-      auth: () => void
-    }
     TelegramLoginWidget: {
       dataOnauth: (user: TelegramUser) => void
     }
@@ -48,6 +45,11 @@ const TelegramLoginWidget = (props: Props) => {
     cornerRadius,
     requestAccess = true
   } = props
+
+  const onAuth = () => {
+    const iframe = ref.current?.querySelector('iframe')
+    iframe && iframe.click()
+  }
 
   useEffect(() => {
     if (ref.current === null) return
@@ -87,7 +89,7 @@ const TelegramLoginWidget = (props: Props) => {
   return (
     <div ref={ref} className="telegram-btn">
       <button
-        onClick={() => window.TWidgetLogin?.auth()}
+        onClick={onAuth}
         className="bg-telegram text-white py-2 px-4 rounded-full"
       >
         <i className="telegram-ico"></i>
