@@ -49,6 +49,10 @@ const TelegramLoginWidget = (props: Props) => {
   const onAuth = () => {
     const element = ref.current?.querySelector('iframe')
 
+    // @ts-ignore
+    console.log(window.TWidgetLogin)
+    console.log(element)
+
     element?.dispatchEvent(
       new MouseEvent('click', {
         bubbles: true,
