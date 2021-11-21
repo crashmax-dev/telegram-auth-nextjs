@@ -1,11 +1,7 @@
 import crypto from 'crypto'
-import { object, string, number } from 'yup'
-import type { SchemaOf } from 'yup'
 import type { TelegramUser } from 'components/TelegramLoginWidget'
 
 export const telegramAuth = (data: TelegramUser, token: string) => {
-  validateUserData(data)
-
   const values = []
   for (const [key, value] of Object.entries(data)) {
     if (key !== 'hash') {
@@ -27,8 +23,7 @@ export const telegramAuth = (data: TelegramUser, token: string) => {
     .update(sorted)
     .digest('hex')
 
-  const isLoggedIn = data.hash === hash
-  if (!isLoggedIn) {
+  if (data.hash !== hash) {
     throw new Error('Authorization data is not valid!')
   }
 
@@ -42,7 +37,7 @@ export const telegramAuth = (data: TelegramUser, token: string) => {
   } = data
 
   return {
-    isLoggedIn,
+    ok: true,
     id,
     username,
     first_name,
@@ -52,16 +47,3 @@ export const telegramAuth = (data: TelegramUser, token: string) => {
   }
 }
 
-export const validateUserData = (data: TelegramUser) => {
-  const userSchema: SchemaOf<TelegramUser> = object({
-    id: number().required(),
-    first_name: string().required(),
-    last_name: string().optional(),
-    username: string().optional(),
-    photo_url: string().optional(),
-    auth_date: number().required(),
-    hash: string().required()
-  }).defined()
-
-  return userSchema.validateSync(data)
-}

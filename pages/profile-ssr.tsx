@@ -2,8 +2,8 @@ import Link from 'components/Link'
 import Layout from 'components/Layout'
 import Profile from 'components/Profile'
 import useUser from 'lib/use-user'
-import { withSessionSsr } from 'lib/session'
-import type { User } from 'lib/routes/session'
+import { withSessionSsr } from 'lib/iron-session'
+import type { User } from 'lib/middleware'
 import type { InferGetServerSidePropsType } from 'next'
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
@@ -39,7 +39,7 @@ export const getServerSideProps = withSessionSsr(
           destination: '/'
         },
         props: {
-          user: { isLoggedIn: false } as User
+          user: { ok: false } as User
         }
       }
     }

@@ -1,22 +1,15 @@
-// this file is a wrapper with defaults to be used in both API routes and `getServerSideProps` functions
-import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next'
-import type { IronSessionOptions } from 'iron-session'
-import type { GetServerSidePropsContext, GetServerSidePropsResult, NextApiHandler } from 'next'
+import { withSessionRoute } from 'lib/iron-session'
+import type { User } from 'lib/middleware'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-export const sessionOptions: IronSessionOptions = {
-  password: process.env.SECRET_COOKIE_PASSWORD,
-  cookieName: process.env.SESSION_COOKIE_NAME ?? 'iron-session'
-}
+export default withSessionRoute(sessionRoute)
 
-export function withSessionRoute(handler: NextApiHandler) {
-  return withIronSessionApiRoute(handler, sessionOptions)
-}
-
-// Theses types are compatible with InferGetStaticPropsType https://nextjs.org/docs/basic-features/data-fetching#typescript-use-getstaticprops
-export function withSessionSsr<P extends Record<string, unknown>>(
-  handler: (
-    context: GetServerSidePropsContext
-  ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>
-) {
-  return withIronSessionSsr(handler, sessionOptions)
+async function sessionRoute(req: NextApiRequest, res: NextApiResponse<Partial<User>>) {
+  if (req.session.user) {
+    // in a real world application you might read the user id from the session and then do a database request
+    // to get more information on the user if needed
+    res.json({ ...req.session.user })
+  } else {
+    res.json({ ok: false })
+  }
 }

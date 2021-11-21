@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <Layout>
-      {!user?.isLoggedIn && (
+      {!user?.ok && (
         <TelegramLoginWidget
           usePic={true}
           requestAccess={false}

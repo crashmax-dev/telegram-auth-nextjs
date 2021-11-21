@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import { useEffect } from 'react'
 import Router from 'next/router'
 import fetcher, { FetchError } from './fetcher'
-import type { User } from 'lib/routes/session'
+import type { User } from 'lib/middleware'
 import type { TelegramUser } from 'components/TelegramLoginWidget'
 
 export default function useUser({
@@ -44,9 +44,9 @@ export default function useUser({
 
     if (
       // If redirectTo is set, redirect if the user was not found.
-      (redirectTo && !redirectIfFound && !user?.isLoggedIn) ||
+      (redirectTo && !redirectIfFound && !user?.ok) ||
       // If redirectIfFound is also set, redirect if the user was found
-      (redirectIfFound && user?.isLoggedIn)
+      (redirectIfFound && user?.ok)
     ) {
       Router.push(redirectTo)
     }

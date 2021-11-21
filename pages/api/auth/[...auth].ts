@@ -1,3 +1,3 @@
-import TelegramAuth from 'lib/auth-middleware'
+import TelegramAuth from 'lib/middleware'
 
 export default TelegramAuth({})
