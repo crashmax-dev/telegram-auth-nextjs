@@ -18,7 +18,6 @@ export default function Home() {
       {!user?.ok && (
         <TelegramLoginWidget
           botId={2107099955}
-          usePic={true}
           requestAccess={false}
           dataOnauth={onLogin}
           botName={process.env.NEXT_PUBLIC_BOT_NAME}
