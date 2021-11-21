@@ -22,20 +22,8 @@ interface Props {
   onLogin: (user: TelegramUser) => void
 }
 
-declare global {
-  interface Window {
-    Telegram: {
-      Login: {
-        auth: (
-          { bot_id }: { bot_id: number },
-          callback: (user: TelegramUser) => void
-        ) => void
-      }
-    }
-  }
-}
-
 /**
+ * Related project
  * @link https://github.com/thisisamir98/telegram-login-button
  * @author Amir Ghezelbash
  * @license MIT
@@ -54,15 +42,10 @@ const TelegramLoginWidget = (props: Props) => {
     requestAccess = true
   } = props
 
-
   const dataOnAuth = () => {
     const widget = new TelegramWidget(botId, requestAccess)
-
     if (!isLoading) {
-      widget.auth((user) => {
-        console.log(user)
-        onLogin(user)
-      }, setIsLoading)
+      widget.auth(onLogin, setIsLoading)
     }
   }
 
