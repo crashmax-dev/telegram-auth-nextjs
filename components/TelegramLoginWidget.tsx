@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { TelegramWidget } from 'lib/telegram-widget'
 
 export interface TelegramUser {
   id: number
@@ -11,8 +12,7 @@ export interface TelegramUser {
 }
 
 interface Props {
-  botId: number
-  botName: string
+  botId: string
   children?: string
   textColor?: string
   buttonColor?: string
@@ -42,11 +42,9 @@ declare global {
  */
 const TelegramLoginWidget = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
 
   const {
     botId,
-    botName,
     onLogin,
     className = '',
     children = 'Log in with Telegram',
@@ -56,35 +54,20 @@ const TelegramLoginWidget = (props: Props) => {
     requestAccess = true
   } = props
 
+
   const dataOnAuth = () => {
-    if (window.Telegram && !isLoading) {
-      setIsLoading(true)
-      window.Telegram.Login.auth(
-        { bot_id: botId },
-        onLogin
-      )
+    const widget = new TelegramWidget(botId, requestAccess)
+
+    if (!isLoading) {
+      widget.auth((user) => {
+        console.log(user)
+        onLogin(user)
+      }, setIsLoading)
     }
   }
 
-  useEffect(() => {
-    if (ref.current === null) return
-
-    const script = document.createElement('script')
-    script.src = 'https://telegram.org/js/telegram-widget.js?15'
-    script.setAttribute('data-telegram-login', botName)
-
-    if (requestAccess) {
-      script.setAttribute('data-request-access', 'write')
-    }
-
-    script.async = true
-
-    ref.current.appendChild(script)
-  }, [])
-
   return (
     <div
-      ref={ref}
       onClick={dataOnAuth}
       className={[
         'telegram-button',

@@ -20,7 +20,6 @@ export default function Home() {
           onLogin={onLogin}
           requestAccess={false}
           botId={process.env.NEXT_PUBLIC_BOT_ID}
-          botName={process.env.NEXT_PUBLIC_BOT_NAME}
         />
       )}
     </Layout>
