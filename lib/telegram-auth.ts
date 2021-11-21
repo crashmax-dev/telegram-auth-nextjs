@@ -1,8 +1,9 @@
 import crypto from 'crypto'
-import { object, string, number, SchemaOf } from 'yup'
-import { TelegramAuthData } from 'telegram-login-button'
+import { object, string, number } from 'yup'
+import type { SchemaOf } from 'yup'
+import type { TelegramUser } from 'components/TelegramLoginWidget'
 
-export const telegramAuth = (data: TelegramAuthData, token: string) => {
+export const telegramAuth = (data: TelegramUser, token: string) => {
   validateUserData(data)
 
   const values = []
@@ -51,8 +52,8 @@ export const telegramAuth = (data: TelegramAuthData, token: string) => {
   }
 }
 
-export const validateUserData = (data: TelegramAuthData) => {
-  const userSchema: SchemaOf<TelegramAuthData> = object({
+export const validateUserData = (data: TelegramUser) => {
+  const userSchema: SchemaOf<TelegramUser> = object({
     id: number().required(),
     first_name: string().required(),
     last_name: string().optional(),

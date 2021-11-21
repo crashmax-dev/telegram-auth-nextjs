@@ -1,8 +1,8 @@
 import { withSessionRoute } from 'lib/session'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { TelegramAuthData } from 'telegram-login-button'
+import type { TelegramUser } from 'components/TelegramLoginWidget'
 
-export interface User extends Omit<TelegramAuthData, 'hash'> {
+export interface User extends Omit<TelegramUser, 'hash'> {
   isLoggedIn: boolean
 }
 

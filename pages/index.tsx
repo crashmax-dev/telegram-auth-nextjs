@@ -1,6 +1,6 @@
 import useUser from 'lib/use-user'
+import TelegramLoginWidget from 'components/TelegramLoginWidget'
 import Layout from 'components/Layout'
-import TelegramLoginButton from 'telegram-login-button'
 
 export default function Home() {
   const { user, onLogin } = useUser({
@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <Layout>
       {!user?.isLoggedIn && (
-        <TelegramLoginButton
+        <TelegramLoginWidget
           usePic={true}
           requestAccess={false}
           dataOnauth={onLogin}
