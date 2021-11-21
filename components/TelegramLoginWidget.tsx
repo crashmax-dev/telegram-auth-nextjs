@@ -98,7 +98,7 @@ const TelegramLoginWidget = (props: Props) => {
   ])
 
   return (
-    <div ref={ref} className="telegram-btn">
+    <div ref={ref}>
       <button
         onClick={onAuth}
         className="bg-telegram text-white py-2 px-4 rounded-full"
@@ -107,9 +107,6 @@ const TelegramLoginWidget = (props: Props) => {
         Войти через Telegram
       </button>
       <style>{`
-        iframe {
-          display: none;
-        }
         .telegram-ico {
           display: inline-block;
           vertical-align: top;
