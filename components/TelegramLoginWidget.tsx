@@ -19,7 +19,7 @@ interface Props {
   className?: string
   cornerRadius?: number
   requestAccess?: boolean
-  dataOnauth: (user: TelegramUser) => void
+  onLogin: (user: TelegramUser) => void
 }
 
 declare global {
@@ -31,9 +31,6 @@ declare global {
           callback: (user: TelegramUser) => void
         ) => void
       }
-    }
-    TelegramLoginWidget: {
-      dataOnauth: (user: TelegramUser) => void
     }
   }
 }
@@ -50,7 +47,7 @@ const TelegramLoginWidget = (props: Props) => {
   const {
     botId,
     botName,
-    dataOnauth,
+    onLogin,
     className = '',
     children = 'Log in with Telegram',
     textColor = '#FFFFFF',
@@ -59,12 +56,12 @@ const TelegramLoginWidget = (props: Props) => {
     requestAccess = true
   } = props
 
-  const onAuth = () => {
+  const dataOnAuth = () => {
     if (window.Telegram && !isLoading) {
       setIsLoading(true)
       window.Telegram.Login.auth(
         { bot_id: botId },
-        dataOnauth
+        onLogin
       )
     }
   }
@@ -72,28 +69,14 @@ const TelegramLoginWidget = (props: Props) => {
   useEffect(() => {
     if (ref.current === null) return
 
-    window.TelegramLoginWidget = {
-      dataOnauth: (user: TelegramUser) => {
-        dataOnauth(user)
-        setIsLoading(false)
-      }
-    }
-
     const script = document.createElement('script')
     script.src = 'https://telegram.org/js/telegram-widget.js?15'
     script.setAttribute('data-telegram-login', botName)
-    // script.setAttribute('data-size', buttonSize)
-
-    // if (cornerRadius !== undefined) {
-    //   script.setAttribute('data-radius', cornerRadius.toString())
-    // }
 
     if (requestAccess) {
       script.setAttribute('data-request-access', 'write')
     }
 
-    // script.setAttribute('data-userpic', usePic.toString())
-    script.setAttribute('data-onauth', 'TelegramLoginWidget.dataOnauth(user)')
     script.async = true
 
     ref.current.appendChild(script)
@@ -102,7 +85,7 @@ const TelegramLoginWidget = (props: Props) => {
   return (
     <div
       ref={ref}
-      onClick={onAuth}
+      onClick={dataOnAuth}
       className={[
         'telegram-button',
         ...className.split(' ')

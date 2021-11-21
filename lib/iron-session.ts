@@ -4,7 +4,7 @@ import type { IronSessionOptions } from 'iron-session'
 import type { GetServerSidePropsContext, GetServerSidePropsResult, NextApiHandler } from 'next'
 
 export const sessionOptions: IronSessionOptions = {
-  password: process.env.SECRET_COOKIE_PASSWORD,
+  password: process.env.SESSION_COOKIE_SECRET,
   cookieName: process.env.SESSION_COOKIE_NAME ?? 'iron-session'
 }
 

@@ -17,9 +17,9 @@ export default function Home() {
     <Layout>
       {!user?.ok && (
         <TelegramLoginWidget
-          botId={2107099955}
+          onLogin={onLogin}
           requestAccess={false}
-          dataOnauth={onLogin}
+          botId={process.env.NEXT_PUBLIC_BOT_ID}
           botName={process.env.NEXT_PUBLIC_BOT_NAME}
         />
       )}
