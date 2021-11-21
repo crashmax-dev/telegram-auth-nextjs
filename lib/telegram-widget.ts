@@ -58,7 +58,7 @@ export class TelegramWidget {
 
     const onAuthDone = (authData: TelegramUser) => {
       if (this.popup.authFinished) return
-      callback(authData)
+      if (authData?.auth_date) callback(authData)
       this.popup.authFinished = true
       window.removeEventListener('message', onMessage)
     }
