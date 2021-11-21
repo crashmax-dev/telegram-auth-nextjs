@@ -1,6 +1,11 @@
 import useUser from 'lib/use-user'
-import TelegramLoginWidget from 'components/TelegramLoginWidget'
+import dynamic from 'next/dynamic'
 import Layout from 'components/Layout'
+
+const TelegramLoginWidget = dynamic(
+  () => import('../components/TelegramLoginWidget'),
+  { ssr: true }
+)
 
 export default function Home() {
   const { user, onLogin } = useUser({
