@@ -13,6 +13,7 @@ export default function useUser({
 
   const onLogin = async (body: TelegramUser) => {
     try {
+      console.log(body)
       mutateUser(
         await fetcher('/api/auth/login', {
           method: 'POST',
