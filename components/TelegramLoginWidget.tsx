@@ -47,8 +47,15 @@ const TelegramLoginWidget = (props: Props) => {
   } = props
 
   const onAuth = () => {
-    const iframe = ref.current?.querySelector('iframe')
-    iframe && iframe.click()
+    const element = ref.current?.querySelector('iframe')
+
+    element?.dispatchEvent(
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        buttons: 1
+      })
+    )
   }
 
   useEffect(() => {
