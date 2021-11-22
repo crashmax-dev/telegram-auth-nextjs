@@ -1,5 +1,5 @@
 import React from 'react'
-import { TelegramUser } from 'components/TelegramLoginWidget'
+import type { TelegramUser } from 'components/TelegramLoginWidget'
 
 interface Popup {
   window: Window | null
