@@ -1,16 +1,7 @@
 import React, { useState } from 'react'
 import { TelegramWidget } from 'lib/telegram-widget'
 import { TelegramIco, LoadingIco } from 'components/Icons'
-
-export interface TelegramUser {
-  id: number
-  first_name: string
-  last_name?: string
-  username?: string
-  photo_url?: string
-  auth_date: number
-  hash: string
-}
+import type { TelegramUser } from 'types/user'
 
 interface Props {
   botId: string

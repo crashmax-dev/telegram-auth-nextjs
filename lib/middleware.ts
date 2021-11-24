@@ -3,11 +3,6 @@ import logoutRoute from 'lib/logout'
 import sessionRoute from 'lib/session'
 import type { IronSessionOptions } from 'iron-session'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { TelegramUser } from 'components/TelegramLoginWidget'
-
-export interface User extends Omit<TelegramUser, 'hash'> {
-  ok: boolean
-}
 
 export interface TelegramAuthOptions {
   session?: IronSessionOptions

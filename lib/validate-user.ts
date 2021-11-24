@@ -1,9 +1,9 @@
 import { object, string, number } from 'yup'
 import type { SchemaOf } from 'yup'
-import type { TelegramUser } from 'components/TelegramLoginWidget'
+import type { User } from 'types/user'
 
-export const validateUser = (data: TelegramUser) => {
-  const userSchema: SchemaOf<TelegramUser> = object({
+export const validateUser = (userData: User) => {
+  const userSchema: SchemaOf<User> = object({
     id: number().required(),
     first_name: string().required(),
     last_name: string().optional(),
@@ -13,5 +13,5 @@ export const validateUser = (data: TelegramUser) => {
     hash: string().required()
   }).defined()
 
-  return userSchema.validateSync(data)
+  return userSchema.validateSync(userData)
 }

@@ -1,10 +1,10 @@
 import { withSessionRoute } from 'lib/iron-session'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import type { User } from 'lib/middleware'
+import type { NextApiRequest } from 'next'
+import type { ResponseSession } from 'types/user'
 
 export default withSessionRoute(logoutRoute)
 
-function logoutRoute(req: NextApiRequest, res: NextApiResponse<Partial<User>>) {
+function logoutRoute(req: NextApiRequest, res: ResponseSession) {
   req.session.destroy()
   res.json({ ok: false })
 }

@@ -3,7 +3,7 @@ import Layout from 'components/Layout'
 import Profile from 'components/Profile'
 import useUser from 'lib/use-user'
 import { withSessionSsr } from 'lib/iron-session'
-import type { User } from 'lib/middleware'
+import type { UserApiResponse } from 'types/user'
 import type { InferGetServerSidePropsType } from 'next'
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
@@ -39,7 +39,7 @@ export const getServerSideProps = withSessionSsr(
           destination: '/'
         },
         props: {
-          user: { ok: false } as User
+          user: { ok: false } as UserApiResponse
         }
       }
     }

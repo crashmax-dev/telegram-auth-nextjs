@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Router from 'next/router'
-import type { User } from 'lib/middleware'
+import type { UserApiResponse } from 'types/user'
 
 type Props = {
-  user?: User
+  user?: UserApiResponse
   onLogout: () => void
 }
 

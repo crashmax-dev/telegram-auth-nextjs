@@ -1,7 +1,7 @@
 import crypto from 'crypto'
-import type { TelegramUser } from 'components/TelegramLoginWidget'
+import { User, UserApiResponse } from 'types/user'
 
-export const telegramAuth = (data: TelegramUser, token: string) => {
+export const telegramAuth = (data: User, token: string): UserApiResponse => {
   const values = []
   for (const [key, value] of Object.entries(data)) {
     if (key !== 'hash') {
