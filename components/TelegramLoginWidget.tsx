@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { TelegramWidget } from 'lib/telegram-widget'
 import { TelegramIco, LoadingIco } from 'components/Icons'
-import type { TelegramUser } from 'types/user'
+import type { User } from 'types/user'
 
 interface Props {
   botId: string
   children?: string
   className?: string
   requestAccess?: boolean
-  onLogin: (user: TelegramUser) => void
+  onLogin: (user: User) => void
 }
 
 /**
