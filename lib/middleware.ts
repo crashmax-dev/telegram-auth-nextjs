@@ -5,6 +5,7 @@ import type { IronSessionOptions } from 'iron-session'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export interface TelegramAuthOptions {
+  database: () => Promise<unknown>
   session?: IronSessionOptions
 }
 
@@ -17,6 +18,8 @@ async function TelegramAuthHandler(req: NextApiRequest, res: NextApiResponse, op
     auth,
     action = auth[0]
   } = req.query
+
+  await options.database()
 
   switch (action) {
     case 'session':
