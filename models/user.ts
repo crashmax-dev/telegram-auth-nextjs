@@ -1,7 +1,9 @@
-import mongoose, { Schema, model } from 'mongoose'
+import mongoose, { Schema, Model, model } from 'mongoose'
 import type { User } from 'types/user'
 
-const UrlSchema = new Schema<User>({
+export type IUser = Omit<User, 'hash'> 
+
+const UserSchema = new Schema<IUser>({
   id: {
     type: Number,
     required: true
@@ -24,4 +26,5 @@ const UrlSchema = new Schema<User>({
   }
 })
 
-export default mongoose.models.Url || model('Url', UrlSchema)
+const UserModel: Model<IUser> = mongoose.models.User || model('User', UserSchema)
+export default UserModel
