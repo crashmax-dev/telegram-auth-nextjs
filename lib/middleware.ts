@@ -4,7 +4,6 @@ export interface TelegramAuthOptions {
   onLogin: (req: NextApiRequest, res: NextApiResponse) => void
   onLogout: (req: NextApiRequest, res: NextApiResponse) => void
   onSession: (req: NextApiRequest, res: NextApiResponse) => void
-  database: () => Promise<unknown>
 }
 
 export default function TelegramAuth(options: TelegramAuthOptions) {
@@ -12,14 +11,12 @@ export default function TelegramAuth(options: TelegramAuthOptions) {
 }
 
 async function TelegramAuthHandler(
-  req: NextApiRequest, res: NextApiResponse, { database, onSession, onLogin, onLogout }: TelegramAuthOptions
+  req: NextApiRequest, res: NextApiResponse, { onSession, onLogin, onLogout }: TelegramAuthOptions
 ) {
   const {
     auth,
     action = auth[0]
   } = req.query
-
-  await database()
 
   switch (action) {
     case 'session':

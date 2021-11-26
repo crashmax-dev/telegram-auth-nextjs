@@ -11,6 +11,10 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       throw new Error('Method Not Allowed!')
     }
 
+    if (req.session.user) {
+      throw new Error('You are authorized!')
+    }
+
     const body = validateUser(req.body)
     const user = telegramAuth(body, process.env.BOT_TOKEN)
     req.session.user = user
