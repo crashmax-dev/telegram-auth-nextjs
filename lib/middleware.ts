@@ -1,18 +1,13 @@
+import loginRoute from 'lib/login'
+import logoutRoute from 'lib/logout'
+import sessionRoute from 'lib/session'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-export interface TelegramAuthOptions {
-  onLogin: (req: NextApiRequest, res: NextApiResponse) => void
-  onLogout: (req: NextApiRequest, res: NextApiResponse) => void
-  onSession: (req: NextApiRequest, res: NextApiResponse) => void
+export default function TelegramAuth() {
+  return (req: NextApiRequest, res: NextApiResponse) => TelegramAuthHandler(req, res)
 }
 
-export default function TelegramAuth(options: TelegramAuthOptions) {
-  return (req: NextApiRequest, res: NextApiResponse) => TelegramAuthHandler(req, res, options)
-}
-
-async function TelegramAuthHandler(
-  req: NextApiRequest, res: NextApiResponse, { onSession, onLogin, onLogout }: TelegramAuthOptions
-) {
+async function TelegramAuthHandler(req: NextApiRequest, res: NextApiResponse) {
   const {
     auth,
     action = auth[0]
@@ -20,11 +15,11 @@ async function TelegramAuthHandler(
 
   switch (action) {
     case 'session':
-      return onSession(req, res)
+      return sessionRoute(req, res)
     case 'login':
-      return onLogin(req, res)
+      return loginRoute(req, res)
     case 'logout':
-      return onLogout(req, res)
+      return logoutRoute(req, res)
     default:
       res.json({ ok: false, message: 'Endpoint not found!' })
   }

@@ -1,9 +1,9 @@
 import mongoose, { Schema, Model, model } from 'mongoose'
 import type { User } from 'types/user'
 
-export type IUser = Omit<User, 'hash'> 
+export type IModelUser = Omit<User, 'hash'> 
 
-const UserSchema = new Schema<IUser>({
+const UserSchema = new Schema<IModelUser>({
   id: {
     type: Number,
     required: true
@@ -26,5 +26,5 @@ const UserSchema = new Schema<IUser>({
   }
 })
 
-const UserModel: Model<IUser> = mongoose.models.User || model('User', UserSchema)
+const UserModel: Model<IModelUser> = mongoose.models.User || model('User', UserSchema)
 export default UserModel

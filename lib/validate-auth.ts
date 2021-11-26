@@ -1,7 +1,8 @@
 import crypto from 'crypto'
-import { User, UserApiResponse } from 'types/user'
+import type { User } from 'types/user'
+import type { IModelUser } from 'models/user'
 
-export const telegramAuth = (data: User, token: string): UserApiResponse => {
+export const telegramAuth = (data: User, token: string): IModelUser => {
   const values = []
   for (const [key, value] of Object.entries(data)) {
     if (key !== 'hash') {
@@ -37,7 +38,6 @@ export const telegramAuth = (data: User, token: string): UserApiResponse => {
   } = data
 
   return {
-    ok: true,
     id,
     username,
     first_name,
