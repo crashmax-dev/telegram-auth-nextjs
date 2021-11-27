@@ -1,22 +1,15 @@
 import Router from 'next/router'
-import useUser from 'lib/use-user'
 import Layout from 'components/Layout'
 import TableUsers from 'components/TableUsers'
 import fetcher from 'lib/fetcher'
-import { STAFF_USER_ID } from 'lib/consts'
 import { useEffect, useState } from 'react'
 import type { UserResponse } from 'types/user'
 
 export default function Users() {
   const [users, setUsers] = useState<UserResponse[]>()
-  const { user } = useUser()
 
   useEffect(() => {
-    if (user?.id === STAFF_USER_ID) {
-      fetchUsers()
-    } else {
-      Router.push('/')
-    }
+    fetchUsers()
   }, [])
 
   const fetchUsers = async () => {
@@ -25,7 +18,11 @@ export default function Users() {
       headers: { 'Content-Type': 'application/json' }
     })
 
-    setUsers(response.users)
+    if (response.ok) {
+      setUsers(response.users)
+    } else {
+      Router.push('/')
+    }
   }
 
   return (
