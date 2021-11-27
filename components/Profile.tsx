@@ -47,7 +47,7 @@ export default function Profile({ user, onLogout }: Props) {
           SG
         </button>
       </div>
-      <pre className="bg-gray-800 text-white overflow-auto w-full rounded-md p-4">
+      <pre className="bg-gray-800 border-gray-700 text-white shadow-lg overflow-auto w-full rounded-md p-4">
         {JSON.stringify(user, null, 2)}
       </pre>
     </>
