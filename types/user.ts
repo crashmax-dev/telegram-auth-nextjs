@@ -1,4 +1,5 @@
-import { NextApiResponse } from 'next'
+import type { IModelUser } from 'models/user'
+import type { NextApiResponse } from 'next'
 
 export interface User {
   id: number
@@ -10,8 +11,8 @@ export interface User {
   hash: string
 }
 
-export interface UserApiResponse extends Omit<User, 'hash'> {
+export interface UserResponse extends IModelUser {
   ok: boolean
 }
 
-export type ResponseSession = NextApiResponse<Partial<UserApiResponse>>
+export type ResponseSession = NextApiResponse<Partial<UserResponse>>

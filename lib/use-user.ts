@@ -2,13 +2,13 @@ import useSWR from 'swr'
 import { useEffect } from 'react'
 import Router from 'next/router'
 import fetcher, { FetchError } from './fetcher'
-import { User, UserApiResponse } from 'types/user'
+import { User, UserResponse } from 'types/user'
 
 export default function useUser({
   redirectTo = '',
   redirectIfFound = false
 } = {}) {
-  const { data: user, mutate: mutateUser } = useSWR<UserApiResponse>('/api/auth/session')
+  const { data: user, mutate: mutateUser } = useSWR<UserResponse>('/api/auth/session')
 
   const onLogin = async (body: User) => {
     try {

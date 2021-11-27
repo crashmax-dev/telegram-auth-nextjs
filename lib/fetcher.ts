@@ -1,7 +1,11 @@
+type FetcherResponse<T> = {
+  ok: boolean
+} & T
+
 export default async function fetcher<JSON = unknown>(
   input: RequestInfo,
   init?: RequestInit
-): Promise<JSON> {
+): Promise<FetcherResponse<JSON>> {
   const response = await fetch(input, init)
 
   // if the server replies, there's always some data in json
