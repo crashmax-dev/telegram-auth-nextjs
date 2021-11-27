@@ -7,7 +7,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 export default withSessionRoute(usersRoute)
 
 async function usersRoute(req: NextApiRequest, res: NextApiResponse) {
-  if (req.session.user?.id !== STAFF_USER_ID) {
+  if (req.session.user?.id === STAFF_USER_ID) {
     await mongodb()
     const users = await UserModel.find().select('-_id -__v')
     res.json({ ok: true, users })

@@ -12,7 +12,7 @@ export default function Users() {
   const { user } = useUser()
 
   useEffect(() => {
-    if (user?.id !== STAFF_USER_ID) {
+    if (user?.id === STAFF_USER_ID) {
       fetchUsers()
     } else {
       Router.push('/')
