@@ -1,4 +1,5 @@
 import { Tier } from 'models/user.document'
+import UserAvatar from './UserAvatar'
 import { JsonPreview } from './JsonPreview'
 import type { LeanDocument } from 'mongoose'
 import type { IUserModel, TiersType } from 'models/user.document'
@@ -23,32 +24,22 @@ export default function TableProfiles({ users }: Props) {
               </tr>
             </thead>
             <tbody>
-              {users.map(({
-                id,
-                type,
-                username,
-                first_name,
-                last_name,
-                photo_url,
-                auth_date
-              }, key
-              ) => {
+              {users.map((user, key) => {
+                const {
+                  id,
+                  type,
+                  username,
+                  first_name,
+                  last_name,
+                  auth_date
+                } = user
+
                 return (
                   <tr key={key}>
                     <td className="py-3 px-4 text-left">
                       <div className="flex items-center">
                         <div className="mr-4">
-                          <div className="w-8 h-8 group rounded-full bg-light-gray overflow-hidden shadow-inner table">
-                            {photo_url ?
-                              <img
-                                src={photo_url}
-                                className="object-cover object-center"
-                              /> :
-                              <span className="text-center font-medium table-cell align-middle">
-                                {first_name[0] + (last_name ? last_name[0] : '')}
-                              </span>
-                            }
-                          </div>
+                          <UserAvatar user={user} />
                         </div>
                         <span>{first_name} {last_name || ''}</span>
                       </div>

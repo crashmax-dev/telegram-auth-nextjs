@@ -1,10 +1,10 @@
-import Image from 'next/image'
 import Router from 'next/router'
+import UserAvatar from './UserAvatar'
 import { JsonPreview } from './JsonPreview'
-import type { UserResponse } from 'types/user'
+import type { User } from 'types/user'
 
 type Props = {
-  user?: UserResponse
+  user?: User
   onLogout: () => void
 }
 
@@ -14,15 +14,7 @@ export default function Profile({ user, onLogout }: Props) {
   return (
     <>
       <div className="flex gap-2">
-        {user.photo_url && (
-          <Image
-            className="inline object-cover w-8 h-8 rounded-full"
-            src={user.photo_url}
-            width={40}
-            height={40}
-            alt="User avatar"
-          />
-        )}
+        <UserAvatar user={user} />
         <button
           onClick={onLogout}
           className="bg-telegram text-white py-2 px-4 rounded-full"
