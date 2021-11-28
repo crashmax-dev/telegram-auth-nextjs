@@ -1,12 +1,10 @@
-import type { UserResponse } from 'types/user'
+import type { User } from 'types/user'
 
 type Props = {
-  users?: UserResponse[]
+  users: User[]
 }
 
-export default function TableUsers({ users }: Props) {
-  if (!users) return null
-
+export default function TableProfiles({ users }: Props) {
   return (
     <>
       <div className="w-full max-w-5xl bg-gray-800 text-white rounded-md shadow-lg">

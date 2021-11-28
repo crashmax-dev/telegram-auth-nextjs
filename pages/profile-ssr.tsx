@@ -3,7 +3,6 @@ import Layout from 'components/Layout'
 import Profile from 'components/Profile'
 import useUser from 'lib/use-user'
 import { withSessionSsr } from 'lib/iron-session'
-import type { UserResponse } from 'types/user'
 import type { InferGetServerSidePropsType } from 'next'
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
@@ -32,20 +31,18 @@ export const getServerSideProps = withSessionSsr(
   async function useSSR({ req }) {
     const user = req.session.user
 
-    if (!user) {
+    if (user) {
       return {
-        redirect: {
-          permanent: false,
-          destination: '/'
-        },
-        props: {
-          user: { ok: false } as UserResponse
-        }
+        props: { user }
       }
     }
 
     return {
-      props: { user }
+      redirect: {
+        permanent: false,
+        destination: '/'
+      },
+      props: {}
     }
   }
 )
