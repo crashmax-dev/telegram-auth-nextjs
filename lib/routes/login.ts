@@ -5,6 +5,7 @@ import { validateUser } from 'lib/validate-user'
 import mongodb from 'lib/mongodb'
 import UserModel from 'models/user'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import TierModel from 'models/tier'
 
 export default withSessionRoute(loginRoute)
 
@@ -25,7 +26,8 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     await UserModel.findOneAndUpdate(
       { id: user.id },
       { ...user },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      { upsert: true, new: true, setDefaultsOnInsert: true },
+      async (_, { _id }) => await TierModel.create({ _id })
     )
 
     const response = { ok: true, ...user }
