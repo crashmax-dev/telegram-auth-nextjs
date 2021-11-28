@@ -23,24 +23,10 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     const user = telegramAuth(body, process.env.BOT_TOKEN)
 
     await mongodb()
-
-    const queryOptions = {
-      new: true,
-      upsert: true,
-      setDefaultsOnInsert: true
-    }
-
-    const { _id } = await UserModel.findOneAndUpdate(
-      { id: user.id },
-      { ...user },
-      queryOptions
-    )
-
-    await TierModel.findOneAndUpdate(
-      { _id },
-      { _id },
-      queryOptions
-    )
+    const filter = { id: user.id }
+    const options = { new: true, upsert: true, setDefaultsOnInsert: true }
+    await UserModel.findOneAndUpdate(filter, { ...user }, options)
+    await TierModel.findOneAndUpdate(filter, filter, options)
 
     const response = { ok: true, ...user }
     req.session.user = response
