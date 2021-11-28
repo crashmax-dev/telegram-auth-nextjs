@@ -1,11 +1,18 @@
-import mongoose, { Schema, Model, model } from 'mongoose'
-import type { User } from 'types/user'
+import mongoose, { Document, Schema, Model, model } from 'mongoose'
 
-export type IModelUser = Omit<User, 'hash'> 
+export interface IUserModel extends Document {
+  id: number
+  first_name: string
+  last_name?: string
+  username?: string
+  photo_url?: string
+  auth_date: number
+}
 
-const UserSchema = new Schema<IModelUser>({
+const UserSchema = new Schema<IUserModel>({
   id: {
     type: Number,
+    unique: true,
     required: true
   },
   first_name: {
@@ -26,5 +33,5 @@ const UserSchema = new Schema<IModelUser>({
   }
 })
 
-const UserModel: Model<IModelUser> = mongoose.models.User || model('User', UserSchema)
+const UserModel: Model<IUserModel> = mongoose.models.User || model('User', UserSchema)
 export default UserModel

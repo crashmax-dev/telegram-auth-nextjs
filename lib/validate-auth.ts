@@ -1,8 +1,7 @@
 import crypto from 'crypto'
-import type { User } from 'types/user'
-import type { IModelUser } from 'models/user'
+import type { TelegramUserData, User } from 'types/user'
 
-export const telegramAuth = (data: User, token: string): IModelUser => {
+export const telegramAuth = (data: TelegramUserData, token: string): User => {
   const values = []
   for (const [key, value] of Object.entries(data)) {
     if (key !== 'hash') {

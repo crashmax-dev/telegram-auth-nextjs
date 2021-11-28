@@ -1,7 +1,6 @@
-import type { IModelUser } from 'models/user'
 import type { NextApiResponse } from 'next'
 
-export interface User {
+export interface TelegramUserData {
   id: number
   first_name: string
   last_name?: string
@@ -11,8 +10,10 @@ export interface User {
   hash: string
 }
 
-export interface UserResponse extends IModelUser {
+export type User = Omit<TelegramUserData, 'hash'>
+
+export interface UserResponse extends User {
   ok: boolean
 }
 
-export type ResponseSession = NextApiResponse<Partial<UserResponse>>
+export type SessionResponse = NextApiResponse<Partial<UserResponse>>

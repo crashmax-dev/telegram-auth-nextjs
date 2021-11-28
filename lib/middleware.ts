@@ -1,6 +1,6 @@
-import loginRoute from 'lib/login'
-import logoutRoute from 'lib/logout'
-import sessionRoute from 'lib/session'
+import loginRoute from 'lib/routes/login'
+import logoutRoute from 'lib/routes/logout'
+import sessionRoute from 'lib/routes/session'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default function TelegramAuth() {

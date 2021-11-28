@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import { useEffect } from 'react'
 import Router from 'next/router'
 import fetcher, { FetchError } from './fetcher'
-import { User, UserResponse } from 'types/user'
+import { UserResponse, TelegramUserData } from 'types/user'
 
 export default function useUser({
   redirectTo = '',
@@ -10,7 +10,7 @@ export default function useUser({
 } = {}) {
   const { data: user, mutate: mutateUser } = useSWR<UserResponse>('/api/auth/session')
 
-  const onLogin = async (body: User) => {
+  const onLogin = async (body: TelegramUserData) => {
     try {
       mutateUser(
         await fetcher('/api/auth/login', {

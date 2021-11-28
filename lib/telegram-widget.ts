@@ -1,5 +1,5 @@
 import React from 'react'
-import { User } from 'types/user'
+import { TelegramUserData } from 'types/user'
 
 interface Popup {
   window: Window | null
@@ -10,7 +10,7 @@ export class TelegramWidget {
   public popup: Popup
   private bot_id: string
   private widgetsOrigin: string
-  private request_access: boolean
+  private request_access = true
 
   constructor(bot_id: string, requestAccess: boolean) {
     this.popup = {
@@ -23,7 +23,7 @@ export class TelegramWidget {
   }
 
   auth(
-    callback: (user: User) => void,
+    callback: (user: TelegramUserData) => void,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) {
     setLoading(true)
@@ -56,9 +56,9 @@ export class TelegramWidget {
       }
     }
 
-    const onAuthDone = (authData: User) => {
+    const onAuthDone = (userData: TelegramUserData) => {
       if (this.popup.authFinished) return
-      if (authData?.auth_date) callback(authData)
+      if (userData?.auth_date) callback(userData)
       this.popup.authFinished = true
       window.removeEventListener('message', onMessage)
     }
@@ -78,7 +78,9 @@ export class TelegramWidget {
     }
   }
 
-  private async getAuthData(callback: (authData: User) => void) {
+  private async getAuthData(
+    callback: (userData: TelegramUserData) => void
+  ) {
     try {
       const url = this.widgetsOrigin + '/auth/get'
       const response = await fetch(url, {
