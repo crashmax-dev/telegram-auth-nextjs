@@ -4,8 +4,8 @@ import { telegramAuth } from 'lib/validate-auth'
 import { validateUser } from 'lib/validate-user'
 import mongodb from 'lib/mongodb'
 import UserModel from 'models/user'
-import type { NextApiRequest, NextApiResponse } from 'next'
 import TierModel from 'models/tier'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default withSessionRoute(loginRoute)
 
@@ -23,12 +23,24 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     const user = telegramAuth(body, process.env.BOT_TOKEN)
 
     await mongodb()
+
+    const queryOptions = {
+      new: true,
+      upsert: true,
+      setDefaultsOnInsert: true
+    }
+
     const { _id } = await UserModel.findOneAndUpdate(
       { id: user.id },
       { ...user },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      queryOptions
     )
-    await TierModel.findOneAndUpdate({ _id })
+
+    await TierModel.findOneAndUpdate(
+      { _id },
+      { _id },
+      queryOptions
+    )
 
     const response = { ok: true, ...user }
     req.session.user = response
