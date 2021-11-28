@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Header from './Header'
-import Footer from './Footer'
 import GithubCorner from './GithubCorner'
 import { ReactNode } from 'react'
 
@@ -55,7 +54,6 @@ export default function Layout({ children }: Props) {
         <Header />
         {children}
       </main>
-      <Footer />
     </div>
   )
 }
