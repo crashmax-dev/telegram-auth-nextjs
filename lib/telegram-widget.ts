@@ -34,7 +34,11 @@ export class TelegramWidget {
     const top = Math.max(0, (screen.height - height) / 2)
 
     const popup_url = this.widgetsOrigin + '/auth?bot_id=' + encodeURIComponent(this.bot_id) + '&origin=' + encodeURIComponent(location.origin || location.protocol + '//' + location.hostname) + (this.request_access ? '&request_access=' + encodeURIComponent(this.request_access) : '')
-    const popup = window.open(popup_url, 'telegram_oauth_bot' + this.bot_id, 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',status=0,location=0,menubar=0,toolbar=0')
+    const popup = window.open(
+      popup_url,
+      '_blank',
+      `width=${width},height=${height},left=${left},top=${top},status=0,location=0,menubar=0,toolbar=0`
+    )
 
     this.popup = {
       window: popup,

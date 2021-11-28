@@ -35,7 +35,7 @@ export default function LoginButton() {
         botId={process.env.NEXT_PUBLIC_BOT_ID}
       />
     )
+  } else {
+    return null
   }
-
-  return null
 }
