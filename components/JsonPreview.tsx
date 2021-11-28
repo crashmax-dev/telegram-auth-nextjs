@@ -1,7 +1,7 @@
 import React from 'react'
 import formatJson from 'json-format-highlight'
 
-export const JsonPreview: React.FC = (props) => {
+const JsonPreview: React.FC = (props) => {
   const colors = {
     keyColor: '#9cdcfe',
     nullColor: '#569cd6',
@@ -20,3 +20,5 @@ export const JsonPreview: React.FC = (props) => {
     ></pre>
   )
 }
+
+export default JsonPreview

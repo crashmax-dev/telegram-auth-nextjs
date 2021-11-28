@@ -1,6 +1,6 @@
 import { Tier } from 'models/user.document'
 import UserAvatar from './UserAvatar'
-import { JsonPreview } from './JsonPreview'
+import JsonPreview from './JsonPreview'
 import type { LeanDocument } from 'mongoose'
 import type { IUserModel, TiersType } from 'models/user.document'
 

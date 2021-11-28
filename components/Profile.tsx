@@ -1,6 +1,6 @@
 import Router from 'next/router'
 import UserAvatar from './UserAvatar'
-import { JsonPreview } from './JsonPreview'
+import JsonPreview from './JsonPreview'
 import type { User } from 'types/user'
 
 type Props = {
