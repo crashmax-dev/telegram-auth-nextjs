@@ -1,7 +1,9 @@
-import type { User } from 'types/user'
+import { Tier } from 'models/user.document'
+import type { LeanDocument } from 'mongoose'
+import type { IUserModel, TiersType } from 'models/user.document'
 
 type Props = {
-  users: User[]
+  users: LeanDocument<IUserModel[]>
 }
 
 export default function TableProfiles({ users }: Props) {
@@ -15,13 +17,20 @@ export default function TableProfiles({ users }: Props) {
                 <th className="py-3 px-4 text-left">name</th>
                 <th className="py-3 px-4 text-left">id</th>
                 <th className="py-3 px-4 text-left">username</th>
+                <th className="py-3 px-4 text-left">type</th>
                 <th className="py-3 px-4">last seen</th>
               </tr>
             </thead>
             <tbody>
-              {users?.map((
-                { id, username, first_name, last_name, photo_url, auth_date },
-                key
+              {users.map(({
+                id,
+                type,
+                username,
+                first_name,
+                last_name,
+                photo_url,
+                auth_date
+              }, key
               ) => {
                 return (
                   <tr key={key}>
@@ -43,7 +52,10 @@ export default function TableProfiles({ users }: Props) {
                       {id}
                     </td>
                     <td className="py-3 px-4">
-                      {username || ''}
+                      <UsernameLink username={username} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <Badge type={type} />
                     </td>
                     <td className="py-3 px-4 text-center">
                       {new Date(auth_date * 1000).toUTCString()}
@@ -59,5 +71,41 @@ export default function TableProfiles({ users }: Props) {
         {JSON.stringify(users, null, 2)}
       </pre>
     </>
+  )
+}
+
+const badgeClassNames = "inline-flex items-center justify-center uppercase px-2 py-1 text-xs font-bold leading-none rounded"
+
+function UsernameLink({ username }: { username?: string }) {
+  if (username) {
+    return (
+      <a
+        className="hover:underline"
+        href={`https://t.me/${username}`}
+        target="_blank"
+      >
+        {username}
+      </a>
+    )
+  } else {
+    return (
+      <span className={[badgeClassNames, 'bg-red-500'].join(' ')}>
+        not used
+      </span>
+    )
+  }
+}
+
+function Badge({ type }: { type: TiersType }) {
+  const colors = {
+    [Tier.everyone]: 'bg-green-500',
+    [Tier.regular]: 'bg-blue-500',
+    [Tier.moderator]: 'bg-red-500'
+  }
+
+  return (
+    <span className={[badgeClassNames, colors[type]].join(' ')}>
+      {type}
+    </span>
   )
 }

@@ -1,19 +1,18 @@
-import mongoose, { Document, Schema, Model, model } from 'mongoose'
-
-export interface IUserModel extends Document {
-  id: number
-  first_name: string
-  last_name?: string
-  username?: string
-  photo_url?: string
-  auth_date: number
-}
+import mongoose, { Schema, model } from 'mongoose'
+import type { Model } from 'mongoose'
+import { Tier } from './user.document'
+import type { IUserModel } from './user.document'
 
 const UserSchema = new Schema<IUserModel>({
   id: {
     type: Number,
     unique: true,
     required: true
+  },
+  type: {
+    type: String,
+    enum: Tier,
+    default: 'everyone'
   },
   first_name: {
     type: String,
@@ -31,7 +30,7 @@ const UserSchema = new Schema<IUserModel>({
   auth_date: {
     type: Number
   }
-})
+}, { versionKey: false })
 
 const UserModel: Model<IUserModel> = mongoose.models.User || model('User', UserSchema)
 export default UserModel

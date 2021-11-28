@@ -1,5 +1,6 @@
 import mongodb from 'lib/mongodb'
-import UserModel from 'models/user'
+import UserModel from 'models/user.model'
+import { Tier } from 'models/user.document'
 import Layout from 'components/Layout'
 import TableProfiles from 'components/TableProfiles'
 import { withSessionSsr } from 'lib/iron-session'
@@ -19,12 +20,22 @@ export const getServerSideProps = withSessionSsr(
   async function useSSR({ req }) {
     const user = req.session.user
 
-    if (user?.id === 216972324) {
+    if (user) {
       await mongodb()
-      const users = await UserModel.find().select('-_id -__v').lean()
 
-      return {
-        props: { users }
+      const userType = await UserModel
+        .findOne({ id: user.id })
+        .select('type')
+
+      if (Tier.moderator === userType?.type) {
+        const users = await UserModel
+          .find()
+          .select('-_id')
+          .lean()
+
+        return {
+          props: { users }
+        }
       }
     }
 
