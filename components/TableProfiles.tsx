@@ -1,4 +1,5 @@
 import { Tier } from 'models/user.document'
+import { JsonPreview } from './JsonPreview'
 import type { LeanDocument } from 'mongoose'
 import type { IUserModel, TiersType } from 'models/user.document'
 
@@ -67,9 +68,7 @@ export default function TableProfiles({ users }: Props) {
           </table>
         </div>
       </div>
-      <pre className="max-w-5xl bg-gray-800 border-gray-700 text-white shadow-lg overflow-auto w-full rounded-md p-4">
-        {JSON.stringify(users, null, 2)}
-      </pre>
+      <JsonPreview>{users}</JsonPreview>
     </>
   )
 }

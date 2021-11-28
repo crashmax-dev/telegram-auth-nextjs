@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Router from 'next/router'
+import { JsonPreview } from './JsonPreview'
 import type { UserResponse } from 'types/user'
 
 type Props = {
@@ -41,9 +42,7 @@ export default function Profile({ user, onLogout }: Props) {
           SG
         </button>
       </div>
-      <pre className="bg-gray-800 border-gray-700 text-white shadow-lg overflow-auto w-full rounded-md p-4">
-        {JSON.stringify(user, null, 2)}
-      </pre>
+      <JsonPreview>{user}</JsonPreview>
     </>
   )
 }
