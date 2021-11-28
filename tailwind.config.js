@@ -9,7 +9,8 @@ module.exports = {
     extend: {
       colors: {
         telegram: '#54A9EB',
-        gray: '#1E1E1E'
+        gray: '#1E1E1E',
+        'light-gray': '#3C3C3C'
       }
     }
   },

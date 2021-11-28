@@ -37,14 +37,18 @@ export default function TableProfiles({ users }: Props) {
                   <tr key={key}>
                     <td className="py-3 px-4 text-left">
                       <div className="flex items-center">
-                        <div className="w-10">
-                          <img
-                            className="w-6 h-6 rounded-full bg-gray-300"
-                            src={photo_url}
-                            width={24}
-                            height={24}
-                            alt="User avatar"
-                          />
+                        <div className="mr-4">
+                          <div className="w-8 h-8 group rounded-full bg-light-gray overflow-hidden shadow-inner table">
+                            {photo_url ?
+                              <img
+                                src={photo_url}
+                                className="object-cover object-center"
+                              /> :
+                              <span className="text-center font-medium table-cell align-middle">
+                                {first_name[0] + (last_name ? last_name[0] : '')}
+                              </span>
+                            }
+                          </div>
                         </div>
                         <span>{first_name} {last_name || ''}</span>
                       </div>
