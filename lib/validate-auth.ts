@@ -45,4 +45,3 @@ export const telegramAuth = (data: TelegramUserData, token: string): User => {
     auth_date
   }
 }
-

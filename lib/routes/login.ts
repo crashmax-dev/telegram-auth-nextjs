@@ -19,16 +19,29 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const body = validateUser(req.body)
-    const user = telegramAuth(body, process.env.BOT_TOKEN)
+    const userData = telegramAuth(body, process.env.BOT_TOKEN)
 
     await mongodb()
+
+    const currentUserType = await UserModel
+      .findOne({ id: userData.id })
+      .select('type')
+
     await UserModel.findOneAndUpdate(
-      { id: user.id },
-      { ...user },
-      { new: true, upsert: true, setDefaultsOnInsert: true }
+      { id: userData.id },
+      {
+        ...userData,
+        type: currentUserType?.type
+      },
+      {
+        new: true,
+        upsert: true,
+        overwrite: true,
+        setDefaultsOnInsert: true
+      }
     )
 
-    const response = { ok: true, ...user }
+    const response = { ok: true, ...userData }
     req.session.user = response
     await req.session.save()
     res.json(response)
