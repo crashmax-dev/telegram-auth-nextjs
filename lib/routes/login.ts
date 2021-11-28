@@ -28,7 +28,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       { ...user },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     )
-    await TierModel.create({ _id })
+    await TierModel.findOneAndUpdate({ _id })
 
     const response = { ok: true, ...user }
     req.session.user = response
