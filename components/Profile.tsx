@@ -1,15 +1,15 @@
 import Router from 'next/router'
 import UserAvatar from './UserAvatar'
 import JsonPreview from './JsonPreview'
-import type { User } from 'types/user'
+import type { UserResponse } from 'types/user'
 
 type Props = {
-  user?: User
+  user?: UserResponse
   onLogout: () => void
 }
 
 export default function Profile({ user, onLogout }: Props) {
-  if (!user) return null
+  if (!user?.ok) return null
 
   return (
     <>

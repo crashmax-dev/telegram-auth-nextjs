@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { TelegramWidget } from 'lib/telegram-widget'
-import { TelegramIco, LoadingIco } from 'components/Icons'
+import { TelegramIco, LoadingIco } from './Icons'
 import type { TelegramUserData } from 'types/user'
 
 interface Props {
