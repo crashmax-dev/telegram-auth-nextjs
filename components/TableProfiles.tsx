@@ -10,7 +10,7 @@ type Props = {
 export default function TableProfiles({ users }: Props) {
   return (
     <>
-      <div className="w-full max-w-5xl bg-gray-800 text-white rounded-md shadow-lg">
+      <div className="w-full max-w-5xl bg-gray text-white rounded-md shadow-lg">
         <div className="overflow-x-auto">
           <table className="table-auto w-full">
             <thead>

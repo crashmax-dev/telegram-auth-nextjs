@@ -15,7 +15,7 @@ export const JsonPreview: React.FC = (props) => {
 
   return (
     <pre
-      className="max-w-5xl bg-gray-800 border-gray-700 text-white shadow-lg overflow-auto w-full rounded-md p-4"
+      className="max-w-5xl bg-gray text-white shadow-lg overflow-auto w-full rounded-md p-4"
       dangerouslySetInnerHTML={{ __html: code }}
     ></pre>
   )

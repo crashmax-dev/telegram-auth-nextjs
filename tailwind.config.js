@@ -8,7 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        telegram: '#54A9EB'
+        telegram: '#54A9EB',
+        gray: '#1E1E1E'
       }
     }
   },
