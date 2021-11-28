@@ -44,9 +44,7 @@ export const getServerSideProps = withSessionSsr(
         permanent: false,
         destination: '/'
       },
-      props: {
-        user: []
-      }
+      props: { user: [] }
     }
   }
 )

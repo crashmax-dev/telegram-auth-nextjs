@@ -38,11 +38,11 @@ export const getServerSideProps = withSessionSsr(
     }
 
     return {
+      props: {},
       redirect: {
         permanent: false,
         destination: '/'
-      },
-      props: {}
+      }
     }
   }
 )
