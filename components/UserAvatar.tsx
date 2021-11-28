@@ -8,7 +8,7 @@ export default function UserAvatar({ user }: Props) {
   const { photo_url, first_name, last_name } = user
 
   return (
-    <div className="w-8 h-8 group rounded-full bg-light-gray overflow-hidden shadow-inner table">
+    <div className="w-10 h-10 group rounded-full bg-light-gray overflow-hidden shadow-inner table">
       {photo_url ?
         <img
           src={photo_url}
