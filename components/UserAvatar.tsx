@@ -14,7 +14,7 @@ export default function UserAvatar({ user }: Props) {
           src={photo_url}
           className="object-cover object-center"
         /> :
-        <span className="text-center font-medium table-cell align-middle">
+        <span className="text-center text-white font-medium table-cell align-middle">
           {first_name[0] + (last_name ? last_name[0] : '')}
         </span>
       }
