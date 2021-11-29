@@ -2,10 +2,10 @@ import { Roles } from 'models/user.document'
 import UserAvatar from './UserAvatar'
 import JsonPreview from './JsonPreview'
 import type { LeanDocument } from 'mongoose'
-import type { IUserModel, RolesType } from 'models/user.document'
+import type { UserModel, RolesType } from 'models/user.document'
 
 type Props = {
-  users: LeanDocument<IUserModel[]>
+  users: LeanDocument<UserModel[]>
 }
 
 export default function TableProfiles({ users }: Props) {

@@ -8,7 +8,7 @@ export enum Roles {
 
 export type RolesType = `${Roles}`
 
-export interface IUserModel extends Document {
+export interface UserModel extends Document {
   id: number
   role: RolesType
   first_name: string
