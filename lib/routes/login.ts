@@ -23,15 +23,15 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 
     await mongodb()
 
-    const currentUserType = await UserModel
+    const currentUserRole = await UserModel
       .findOne({ id: userData.id })
-      .select('type')
+      .select('role')
 
     await UserModel.findOneAndUpdate(
       { id: userData.id },
       {
         ...userData,
-        type: currentUserType?.type
+        role: currentUserRole?.role
       },
       {
         new: true,

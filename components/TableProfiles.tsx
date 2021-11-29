@@ -1,8 +1,8 @@
-import { Tier } from 'models/user.document'
+import { Roles } from 'models/user.document'
 import UserAvatar from './UserAvatar'
 import JsonPreview from './JsonPreview'
 import type { LeanDocument } from 'mongoose'
-import type { IUserModel, TiersType } from 'models/user.document'
+import type { IUserModel, RolesType } from 'models/user.document'
 
 type Props = {
   users: LeanDocument<IUserModel[]>
@@ -19,7 +19,7 @@ export default function TableProfiles({ users }: Props) {
                 <th className="py-3 px-4 text-left">name</th>
                 <th className="py-3 px-4 text-left">id</th>
                 <th className="py-3 px-4 text-left">username</th>
-                <th className="py-3 px-4 text-left">type</th>
+                <th className="py-3 px-4 text-left">role</th>
                 <th className="py-3 px-4">last seen</th>
               </tr>
             </thead>
@@ -27,7 +27,7 @@ export default function TableProfiles({ users }: Props) {
               {users.map((user, key) => {
                 const {
                   id,
-                  type,
+                  role,
                   username,
                   first_name,
                   last_name,
@@ -51,7 +51,7 @@ export default function TableProfiles({ users }: Props) {
                       <UsernameLink username={username} />
                     </td>
                     <td className="py-3 px-4">
-                      <Badge type={type} />
+                      <Badge role={role} />
                     </td>
                     <td className="py-3 px-4 text-center">
                       {new Date(auth_date * 1000).toUTCString()}
@@ -90,16 +90,16 @@ function UsernameLink({ username }: { username?: string }) {
   }
 }
 
-function Badge({ type }: { type: TiersType }) {
+function Badge({ role }: { role: RolesType }) {
   const colors = {
-    [Tier.everyone]: 'bg-green-500',
-    [Tier.regular]: 'bg-blue-500',
-    [Tier.moderator]: 'bg-red-500'
+    [Roles.user]: 'bg-green-500',
+    [Roles.owner]: 'bg-blue-500',
+    [Roles.root]: 'bg-red-500'
   }
 
   return (
-    <span className={[badgeClassNames, colors[type]].join(' ')}>
-      {type}
+    <span className={[badgeClassNames, colors[role]].join(' ')}>
+      {role}
     </span>
   )
 }

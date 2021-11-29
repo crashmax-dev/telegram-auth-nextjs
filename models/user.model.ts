@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from 'mongoose'
 import type { Model } from 'mongoose'
-import { Tier } from './user.document'
+import { Roles } from './user.document'
 import type { IUserModel } from './user.document'
 
 const UserSchema = new Schema<IUserModel>({
@@ -9,10 +9,11 @@ const UserSchema = new Schema<IUserModel>({
     unique: true,
     required: true
   },
-  type: {
+  role: {
     type: String,
-    enum: Tier,
-    default: 'everyone'
+    enum: Object.values(Roles),
+    default: 'user',
+    required: true
   },
   first_name: {
     type: String,

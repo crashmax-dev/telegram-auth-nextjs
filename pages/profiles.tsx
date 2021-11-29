@@ -1,6 +1,6 @@
 import mongodb from 'lib/mongodb'
 import UserModel from 'models/user.model'
-import { Tier } from 'models/user.document'
+import { Roles } from 'models/user.document'
 import Layout from 'components/Layout'
 import TableProfiles from 'components/TableProfiles'
 import { withSessionSsr } from 'lib/iron-session'
@@ -23,11 +23,11 @@ export const getServerSideProps = withSessionSsr(
     if (user) {
       await mongodb()
 
-      const userType = await UserModel
+      const userRole = await UserModel
         .findOne({ id: user.id })
-        .select('type')
+        .select('role')
 
-      if (Tier.moderator === userType?.type) {
+      if (Roles.root === userRole?.role) {
         const users = await UserModel
           .find()
           .select('-_id')

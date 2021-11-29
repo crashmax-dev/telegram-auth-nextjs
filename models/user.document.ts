@@ -1,16 +1,16 @@
 import { Document } from 'mongoose'
 
-export enum Tier {
-  everyone = 'everyone',
-  regular = 'regular',
-  moderator = 'moderator'
+export enum Roles {
+  user = 'user',
+  owner = 'owner',
+  root = 'root'
 }
 
-export type TiersType = `${Tier}`
+export type RolesType = `${Roles}`
 
 export interface IUserModel extends Document {
   id: number
-  type: TiersType
+  role: RolesType
   first_name: string
   last_name?: string
   username?: string
