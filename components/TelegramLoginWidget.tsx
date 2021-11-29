@@ -24,7 +24,7 @@ export default function TelegramLoginWidget(props: Props) {
   const {
     botId,
     onLogin,
-    className = '',
+    className,
     requestAccess = true,
     children = 'Log in with Telegram'
   } = props
@@ -41,34 +41,24 @@ export default function TelegramLoginWidget(props: Props) {
 
   return (
     <div
+      className={className}
       onClick={dataOnAuth}
-      className={['telegram-login-widget', ...className.split(' ')].join(' ')}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0.5rem 1rem 0.5rem 1rem',
+        fontSize: '16px',
+        borderRadius: '999px',
+        fontFamily: 'system-ui',
+        userSelect: 'none',
+        cursor: 'pointer',
+        color: '#FFFFFF',
+        backgroundColor: '#54A9EB'
+      }}
     >
       {isLoading ? <LoadingIco /> : <TelegramIco />}
       {children}
-      <style>{`
-        .telegram-login-widget {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0.5rem 1rem 0.5rem 1rem;
-          font-size: 16px;
-          border-radius: 999px;
-          font-family: system-ui;
-          user-select: none;
-          cursor: pointer;
-          color: #FFFFFF;
-          background-color: #54A9EB;
-        }
-
-        .telegram-login-widget__icon {
-          display: inline-block;
-          vertical-align: top;
-          margin-right: 12px;
-          width: 24px;
-          height: 24px;
-        }
-      `}</style>
     </div>
   )
 }
