@@ -2,7 +2,7 @@ import Link from './Link'
 
 export default function Header() {
   return (
-    <h1 className="text-4xl font-bold">
+    <h1 className="text-center text-4xl font-bold">
       Next.js{' '}
       <Link href="https://core.telegram.org/widgets/login">
         Telegram Login Widget
