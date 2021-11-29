@@ -22,6 +22,12 @@ export default function Profile({ user, onLogout }: Props) {
           Logout
         </button>
         <button
+          onClick={() => Router.push('/profiles')}
+          className="bg-telegram text-white py-2 px-4 rounded-full"
+        >
+          Profiles
+        </button>
+        <button
           onClick={() => Router.push('/profile-ssr')}
           className="bg-telegram text-white py-2 px-4 rounded-full"
         >
