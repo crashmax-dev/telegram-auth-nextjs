@@ -1,14 +1,18 @@
-import { useState } from 'react'
-import useUser from 'lib/use-user'
+import { useEffect, useState } from 'react'
+import { useUser } from 'context/user-user'
 import { TelegramIco, LoadingIco } from './Icons'
 import TelegramLoginWidget from './TelegramLoginWidget'
 
 export default function LoginButton() {
   const [isLoading, setIsLoading] = useState(false)
-  const { user, onLogin } = useUser({
-    redirectTo: '/profile-sg',
-    redirectIfFound: true
-  })
+  const { user, onLogin, setRedirect } = useUser()
+
+  useEffect(() => {
+    setRedirect({
+      redirectTo: '/profile-sg',
+      redirectIfFound: true
+    })
+  }, [])
 
   if (process.env.NODE_ENV === 'development') {
     return (

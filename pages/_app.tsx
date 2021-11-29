@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app'
 import { SWRConfig } from 'swr'
+import { UserProvider } from 'context/user-user'
 import fetcher from 'lib/fetcher'
 import Router from 'next/router'
 import ProgressBar from '@badrap/bar-of-progress'
@@ -16,16 +17,21 @@ Router.events.on('routeChangeComplete', progress.finish)
 Router.events.on('routeChangeError', progress.finish)
 
 export default function App({ Component, pageProps }: AppProps) {
+  const { fallback = {} } = pageProps
+
   return (
     <SWRConfig
       value={{
+        fallback,
         fetcher,
         onError: (err) => {
           console.error(err)
         }
       }}
     >
-      <Component {...pageProps} />
+      <UserProvider>
+        <Component {...pageProps} />
+      </UserProvider>
     </SWRConfig>
   )
 }

@@ -2,7 +2,7 @@ import mongodb from 'lib/mongodb'
 import UserModel from 'models/user.model'
 import { Roles } from 'models/user.document'
 import Layout from 'components/Layout'
-import TableProfiles from 'components/TableProfiles'
+import ListProfiles from 'components/ListProfiles'
 import { withSessionSsr } from 'lib/iron-session'
 import type { InferGetServerSidePropsType } from 'next'
 
@@ -11,7 +11,7 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 export default function Profiles({ users }: Props) {
   return (
     <Layout>
-      <TableProfiles users={users} />
+      <ListProfiles users={users} />
     </Layout>
   )
 }
@@ -34,7 +34,12 @@ export const getServerSideProps = withSessionSsr(
           .lean()
 
         return {
-          props: { users }
+          props: {
+            users,
+            fallback: {
+              '/api/auth/session': user
+            }
+          }
         }
       }
     }
@@ -44,7 +49,9 @@ export const getServerSideProps = withSessionSsr(
         permanent: false,
         destination: '/'
       },
-      props: { user: [] }
+      props: {
+        user: []
+      }
     }
   }
 )

@@ -1,14 +1,17 @@
 import Router from 'next/router'
 import UserAvatar from './UserAvatar'
 import JsonPreview from './JsonPreview'
+import { useUser } from 'context/user-user'
 import type { UserResponse } from 'types/user'
 
 type Props = {
   user?: UserResponse
-  onLogout: () => void
+  onLogout?: () => void
 }
 
 export default function Profile({ user, onLogout }: Props) {
+  const { onLogout: _onLogout } = useUser()
+
   if (!user?.ok) return null
 
   return (
@@ -16,7 +19,7 @@ export default function Profile({ user, onLogout }: Props) {
       <div className="flex gap-2">
         <UserAvatar user={user} />
         <button
-          onClick={onLogout}
+          onClick={onLogout || _onLogout}
           className="bg-telegram text-white py-2 px-4 rounded-full"
         >
           Logout

@@ -1,12 +1,15 @@
 import Link from 'components/Link'
 import Layout from 'components/Layout'
 import Profile from 'components/Profile'
-import useUser from 'lib/use-user'
+import { useUser } from 'context/user-user'
+import { useEffect } from 'react'
 
 export default function ProfileSg() {
-  const { user, onLogout } = useUser({
-    redirectTo: '/'
-  })
+  const { user, onLogout, setRedirect } = useUser()
+
+  useEffect(() => {
+    setRedirect({ redirectTo: '/' })
+  }, [])
 
   return (
     <Layout>
