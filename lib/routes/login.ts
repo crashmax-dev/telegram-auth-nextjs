@@ -1,4 +1,3 @@
-
 import { withSessionRoute } from 'lib/iron-session'
 import { telegramAuth } from 'lib/validate-auth'
 import { validateUser } from 'lib/validate-user'

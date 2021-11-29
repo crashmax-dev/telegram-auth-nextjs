@@ -8,7 +8,7 @@ type Props = {
   users: LeanDocument<UserModel[]>
 }
 
-export default function TableProfiles({ users }: Props) {
+export default function ListProfiles({ users }: Props) {
   return (
     <>
       <div className="w-full max-w-5xl bg-gray text-white rounded-md shadow-lg">

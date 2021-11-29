@@ -5,7 +5,11 @@ type Props = {
 
 export default function Link({ href, children }: Props) {
   return (
-    <a href={href} className="text-telegram hover:underline">
+    <a
+      href={href}
+      target="_blank"
+      className="text-telegram hover:underline"
+    >
       {children}
     </a>
   )
