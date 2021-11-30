@@ -9,15 +9,25 @@ export default withSessionRoute(usersRoute)
 
 async function usersRoute(req: NextApiRequest, res: NextApiResponse) {
   try {
+    await connectToDatabase()
     await validateSession(req.session.user)
-    switch (req.method) {
-      case 'DELETE':
-        return deleteUser(req, res)
-      case 'POST':
-        return changeUserRole(req, res)
-      default:
-        throw new Error('Method Not Allowed!')
+
+    const { method } = req
+
+    if (method === 'GET') {
+      const users = await getUsers()
+      return res.json({ ok: true, users })
     }
+
+    if (method === 'POST') {
+      return changeUserRole(req, res)
+    }
+
+    if (method === 'DELETE') {
+      return deleteUser(req, res)
+    }
+
+    throw new Error('Method Not Allowed!')
   } catch (err) {
     res.status(500).json({
       ok: false,
@@ -26,7 +36,7 @@ async function usersRoute(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-async function validateSession(session?: UserResponse) {
+export async function validateSession(session?: UserResponse) {
   if (!session) {
     throw new Error('You are not authorized!')
   }
@@ -36,13 +46,11 @@ async function validateSession(session?: UserResponse) {
     .select('role')
 
   if (!(Roles.root === userRole!.role)) {
-    throw new Error('Forbidden!')
+    throw new Error('Access denied!')
   }
 }
 
-export async function getUsers(session?: UserResponse) {
-  await connectToDatabase()
-  await validateSession(session)
+export async function getUsers() {
   return await UserModel
     .find()
     .select('-_id')
@@ -50,14 +58,12 @@ export async function getUsers(session?: UserResponse) {
 }
 
 async function deleteUser(req: NextApiRequest, res: NextApiResponse) {
-  await connectToDatabase()
   res.json({ ok: false })
 }
 
 async function changeUserRole(req: NextApiRequest, res: NextApiResponse) {
-  await connectToDatabase()
-
   const { id, role } = req.body
+
   if (role in Roles) {
     await UserModel.findOneAndUpdate(
       { id },

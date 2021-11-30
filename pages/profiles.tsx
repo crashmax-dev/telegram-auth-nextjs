@@ -1,7 +1,8 @@
-import { getUsers } from './api/users'
 import Layout from 'components/Layout'
 import ListProfiles from 'components/ListProfiles'
+import { connectToDatabase } from 'lib/mongodb'
 import { withSessionSsr } from 'lib/iron-session'
+import { getUsers, validateSession } from './api/users'
 import type { InferGetServerSidePropsType } from 'next'
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
@@ -18,7 +19,9 @@ export const getServerSideProps = withSessionSsr(
   async function useSSR({ req }) {
     try {
       const session = req.session.user
-      const users = await getUsers(session)
+      await connectToDatabase()
+      await validateSession(session)
+      const users = await getUsers()
 
       return {
         props: {
