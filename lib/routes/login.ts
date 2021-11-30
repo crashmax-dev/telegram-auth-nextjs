@@ -1,8 +1,8 @@
 import { withSessionRoute } from 'lib/iron-session'
 import { telegramAuth } from 'lib/validate-auth'
 import { validateUser } from 'lib/validate-user'
-import mongodb from 'lib/mongodb'
-import UserModel from 'models/user.model'
+import { connectToDatabase } from 'lib/mongodb'
+import { UserModel } from 'models/user.model'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default withSessionRoute(loginRoute)
@@ -20,7 +20,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     const body = validateUser(req.body)
     const userData = telegramAuth(body, process.env.BOT_TOKEN)
 
-    await mongodb()
+    await connectToDatabase()
 
     const currentUserRole = await UserModel
       .findOne({ id: userData.id })

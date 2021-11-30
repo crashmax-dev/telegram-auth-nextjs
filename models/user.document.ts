@@ -8,7 +8,7 @@ export enum Roles {
 
 export type RolesType = `${Roles}`
 
-export interface UserModel extends Document {
+export interface UserData {
   id: number
   role: RolesType
   first_name: string
@@ -17,3 +17,5 @@ export interface UserModel extends Document {
   photo_url?: string
   auth_date: number
 }
+
+export type IUserModel = UserData & Document

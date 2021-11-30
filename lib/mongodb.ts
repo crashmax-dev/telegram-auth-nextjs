@@ -22,7 +22,7 @@ if (!cached) {
   }
 }
 
-async function dbConnect() {
+export async function connectToDatabase() {
   if (cached.conn) {
     return cached.conn
   }
@@ -40,5 +40,3 @@ async function dbConnect() {
   cached.conn = await cached.promise
   return cached.conn
 }
-
-export default dbConnect

@@ -1,9 +1,9 @@
 import mongoose, { Schema } from 'mongoose'
 import type { Model } from 'mongoose'
 import { Roles } from './user.document'
-import type { UserModel } from './user.document'
+import type { IUserModel } from './user.document'
 
-const UserSchema = new Schema<UserModel>(
+const UserSchema = new Schema<IUserModel>(
   {
     id: {
       type: Number,
@@ -38,12 +38,12 @@ const UserSchema = new Schema<UserModel>(
   }
 )
 
-let model: Model<UserModel>
+let UserModel: Model<IUserModel>
 
 try {
-  model = mongoose.model('User')
+  UserModel = mongoose.model('User')
 } catch (_) {
-  model = mongoose.model('User', UserSchema)
+  UserModel = mongoose.model('User', UserSchema)
 }
 
-export default model
+export { UserModel }

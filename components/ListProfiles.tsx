@@ -1,14 +1,17 @@
-import { Roles } from 'models/user.document'
+import { useState } from 'react'
 import UserAvatar from './UserAvatar'
 import JsonPreview from './JsonPreview'
-import type { LeanDocument } from 'mongoose'
-import type { UserModel, RolesType } from 'models/user.document'
+import { useUser } from 'context/use-user'
+import { Roles } from 'models/user.document'
+import type { UserData, RolesType } from 'models/user.document'
 
 type Props = {
-  users: LeanDocument<UserModel[]>
+  users: UserData[]
 }
 
 export default function ListProfiles({ users }: Props) {
+  const { user: _user } = useUser()
+
   return (
     <>
       <div className="w-full max-w-5xl bg-gray text-white rounded-md shadow-lg">
@@ -19,8 +22,9 @@ export default function ListProfiles({ users }: Props) {
                 <th className="py-3 px-4 text-left">name</th>
                 <th className="py-3 px-4 text-left">id</th>
                 <th className="py-3 px-4 text-left">username</th>
-                <th className="py-3 px-4 text-left">role</th>
+                <th className="py-3 px-4">role</th>
                 <th className="py-3 px-4">last seen</th>
+                {/* <th className="py-3 px-4">actions</th> */}
               </tr>
             </thead>
             <tbody>
@@ -31,7 +35,7 @@ export default function ListProfiles({ users }: Props) {
                   username,
                   first_name,
                   last_name,
-                  auth_date
+                  auth_date,
                 } = user
 
                 return (
@@ -51,11 +55,21 @@ export default function ListProfiles({ users }: Props) {
                       <UsernameLink username={username} />
                     </td>
                     <td className="py-3 px-4">
-                      <Badge role={role} />
+                      {_user!.id !== id ?
+                        <UserRole id={id} role={role} /> :
+                        <span className="w-full inline-flex items-center justify-center uppercase px-2 py-1 text-xs font-bold leading-none rounded bg-red-500">
+                          {role}
+                        </span>
+                      }
                     </td>
                     <td className="py-3 px-4 text-center">
                       {new Date(auth_date * 1000).toUTCString()}
                     </td>
+                    {/* <td className="py-3 px-4 text-center">
+                      <button className="bg-green-500 h-8 text-white px-4 rounded-md">
+                        Edit
+                      </button>
+                    </td> */}
                   </tr>
                 )
               })}
@@ -67,8 +81,6 @@ export default function ListProfiles({ users }: Props) {
     </>
   )
 }
-
-const badgeClassNames = "inline-flex items-center justify-center uppercase px-2 py-1 text-xs font-bold leading-none rounded"
 
 function UsernameLink({ username }: { username?: string }) {
   if (username) {
@@ -83,23 +95,54 @@ function UsernameLink({ username }: { username?: string }) {
     )
   } else {
     return (
-      <span className={[badgeClassNames, 'bg-red-500'].join(' ')}>
+      <span className={["inline-flex items-center justify-center uppercase px-2 py-1 text-xs font-bold leading-none rounded", 'bg-red-500'].join(' ')}>
         not used
       </span>
     )
   }
 }
 
-function Badge({ role }: { role: RolesType }) {
+function UserRole(props: { id: number, role: RolesType }) {
+  const [userRole, setUserRole] = useState(props.role)
+  const [isLoading, setIsLoading] = useState(false)
+
   const colors = {
     [Roles.user]: 'bg-green-500',
     [Roles.owner]: 'bg-blue-500',
     [Roles.root]: 'bg-red-500'
   }
 
+  const updateUserRole = async (id: number, role: RolesType) => {
+    try {
+      setIsLoading(true)
+      const response = await fetch('/api/users', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, role })
+      })
+
+      const data = await response.json()
+      if (data.ok) {
+        setUserRole(role)
+      }
+    } catch (err) {
+      console.error(err)
+      setUserRole(userRole)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
-    <span className={[badgeClassNames, colors[role]].join(' ')}>
-      {role}
-    </span>
+    <select
+      disabled={isLoading}
+      defaultValue={userRole}
+      onChange={e => updateUserRole(props.id, e.currentTarget.value as RolesType)}
+      className={['w-full uppercase px-2 py-1 text-xs text-center font-bold leading-none appearance-none rounded outline-none cursor-pointer', colors[userRole]].join(' ')}
+    >
+      <option className="bg-gray" value={Roles.user}>{Roles.user}</option>
+      <option className="bg-gray" value={Roles.owner}>{Roles.owner}</option>
+      <option className="bg-gray" value={Roles.root}>{Roles.root}</option>
+    </select>
   )
 }
