@@ -13,7 +13,7 @@ async function usersRoute(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
       case 'DELETE':
         return deleteUser(req, res)
-      case 'PATCH':
+      case 'POST':
         return changeUserRole(req, res)
       default:
         throw new Error('Method Not Allowed!')

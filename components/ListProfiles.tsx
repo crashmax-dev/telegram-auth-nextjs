@@ -116,7 +116,7 @@ function UserRole(props: { id: number, role: RolesType }) {
     try {
       setIsLoading(true)
       const response = await fetch('/api/users', {
-        method: 'PATCH',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, role })
       })
