@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useUser } from 'context/user-user'
+import { useUser } from 'context/use-user'
 import { TelegramIco, LoadingIco } from './Icons'
 import TelegramLoginWidget from './TelegramLoginWidget'
 

@@ -1,7 +1,7 @@
 import Link from 'components/Link'
 import Layout from 'components/Layout'
 import Profile from 'components/Profile'
-import { useUser } from 'context/user-user'
+import { useUser } from 'context/use-user'
 import { useEffect } from 'react'
 
 export default function ProfileSg() {

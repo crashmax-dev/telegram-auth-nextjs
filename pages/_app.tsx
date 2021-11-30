@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 import { SWRConfig } from 'swr'
-import { UserProvider } from 'context/user-user'
+import { UserProvider } from 'context/use-user'
 import fetcher from 'lib/fetcher'
 import Router from 'next/router'
 import ProgressBar from '@badrap/bar-of-progress'
