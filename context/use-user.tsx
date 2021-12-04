@@ -1,7 +1,8 @@
 import useSWR from 'swr'
 import Router from 'next/router'
 import fetcher, { FetchError } from 'lib/fetcher'
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
 import type { UserResponse, TelegramUserData } from 'types/user'
 
 type RedirectState = {
