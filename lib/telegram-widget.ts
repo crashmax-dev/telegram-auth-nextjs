@@ -1,4 +1,5 @@
 import React from 'react'
+import fetcher from './fetcher'
 import { TelegramUserData } from 'types/user'
 
 interface Popup {
@@ -86,19 +87,20 @@ export class TelegramWidget {
     callback: (userData: TelegramUserData) => void
   ) {
     try {
-      const url = this.widgetsOrigin + '/auth/get'
-      const response = await fetch(url, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: new URLSearchParams({ bot_id: this.bot_id })
-      })
+      const response = await fetcher<TelegramUserData>(
+        this.widgetsOrigin + '/auth/get',
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: new URLSearchParams({ bot_id: this.bot_id })
+        }
+      )
 
-      const body = await response.json()
-      callback(body)
+      callback(response)
     } catch (err) {
       console.error(err)
     }
