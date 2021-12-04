@@ -5,7 +5,8 @@ import type { GetServerSidePropsContext, GetServerSidePropsResult, NextApiHandle
 
 export const sessionOptions: IronSessionOptions = {
   password: process.env.SESSION_COOKIE_SECRET,
-  cookieName: process.env.SESSION_COOKIE_NAME ?? 'iron-session'
+  cookieName: process.env.SESSION_COOKIE_NAME ?? 'iron-session',
+  cookieOptions: { secure: process.env.NODE_ENV === 'production' }
 }
 
 export function withSessionRoute(handler: NextApiHandler) {
