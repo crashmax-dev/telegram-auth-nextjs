@@ -15,7 +15,10 @@ export default function UserAvatar({ user }: Props) {
           className="object-cover object-center"
         /> :
         <span className="text-center text-white font-medium table-cell align-middle">
-          {first_name[0] + (last_name ? last_name[0] : '')}
+          {first_name && last_name ?
+            first_name.charAt(0) + last_name.charAt(0) :
+            first_name.charAt(0)
+          }
         </span>
       }
     </div>
