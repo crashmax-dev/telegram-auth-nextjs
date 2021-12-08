@@ -23,7 +23,7 @@ export const telegramAuth = (data: TelegramUserData, token: string): User => {
     .update(sorted)
     .digest('hex')
 
-  if (data.hash !== hash) {
+  if (data.hash !== hash && process.env.NODE_ENV !== 'development') {
     throw new Error('Authorization data is not valid!')
   }
 

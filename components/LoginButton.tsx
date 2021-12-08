@@ -27,8 +27,8 @@ export default function LoginButton() {
             first_name: "Vitalij",
             last_name: "Ryndin",
             photo_url: "https://t.me/i/userpic/320/P3CGN4q_l5jqPbP5lctVKmcti38Q6inTB3e9gDbcCN4.jpg",
-            hash: process.env.NEXT_PUBLIC_DEV_HASH,
-            auth_date: 1638131757
+            hash: 'lorem ipsum',
+            auth_date: 0
           })
         }}
       >
