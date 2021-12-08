@@ -2,7 +2,8 @@ import Layout from 'components/Layout'
 import ListProfiles from 'components/ListProfiles'
 import { connectToDatabase } from 'lib/mongodb'
 import { withSessionSsr } from 'lib/iron-session'
-import { getUsers, validateSession } from './api/users'
+import { getUsers, validateRole } from './api/users'
+import { Roles } from 'models/user.document'
 import type { InferGetServerSidePropsType } from 'next'
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
@@ -20,7 +21,7 @@ export const getServerSideProps = withSessionSsr(
     try {
       const session = req.session.user
       await connectToDatabase()
-      await validateSession(session)
+      await validateRole(Roles.root, session)
       const users = await getUsers()
 
       return {
