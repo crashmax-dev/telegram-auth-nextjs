@@ -28,6 +28,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 
     await UserModel.findOneAndUpdate(
       { id: userData.id },
+      // @ts-ignore
       {
         ...userData,
         role: currentUserRole?.role
