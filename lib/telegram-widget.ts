@@ -35,6 +35,7 @@ export class TelegramWidget {
     const top = Math.max(0, (screen.height - height) / 2)
 
     const popup_url = this.widgetsOrigin + '/auth?bot_id=' + encodeURIComponent(this.bot_id) + '&origin=' + encodeURIComponent(location.origin || location.protocol + '//' + location.hostname) + (this.request_access ? '&request_access=' + encodeURIComponent(this.request_access) : '')
+    console.log('popup_url', popup_url)
     const popup = window.open(
       popup_url,
       '_blank',
@@ -47,10 +48,12 @@ export class TelegramWidget {
     }
 
     const onMessage = (event: MessageEvent) => {
+      console.log('event', event)
       let data
 
       try {
         data = JSON.parse(event.data)
+        console.log('data', data)
       } catch (e) {
         data = {}
       }
